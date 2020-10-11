@@ -1,4 +1,26 @@
 <?php
+/*
+ *  Meat Loaf Server
+ *  ---------------
+ *
+ *  Copyright (C) 2020, Jaime Johnston <jaime@idolpx.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program; if not, write to the Free Software Foundation, Inc.,
+ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ */
+
 require_once("IMG_native.php");
 
 class IMG_CRT extends IMG_Native {
@@ -24,9 +46,9 @@ class IMG_CRT extends IMG_Native {
 			$bytes   			= fread($this->fp, 4); 	
 			$this->header_size = ord($bytes[0]) + (ord($bytes[1]) * 0x100) + (ord($bytes[3]) * 0x1000) + (ord($bytes[4]) * 0x10000);												  // Header Size
 			$bytes   			= fread($this->fp, 2); 	
-			$this->crt_version = ord($bytes[0]) + (ord($bytes[1]) * 0x100);				// Cart Version
+			$this->crt_version = ord($bytes[0]) + (ord($bytes[1]) * 0x100);			// Cart Version
 			$bytes   			= fread($this->fp, 2); 	
-			$this->hw_version = ord($bytes[0]) + (ord($bytes[1]) * 0x100);				// Cart HW Type
+			$this->hw_version = ord($bytes[0]) + (ord($bytes[1]) * 0x100);			// Cart HW Type
 			$this->exrom		= ord(fread($this-fp, 1);							// EXROM Line Status
 			$this->game			= ord(fread($this-fp, 1);							// GAME Line Status
 			$bytes   			= fread($this->fp, 6);								// Reserved
