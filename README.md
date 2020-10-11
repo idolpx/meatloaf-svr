@@ -1,3 +1,3 @@
 # meatloaf-svr
 
-![LOAD_HTTP](doc/Meat Loaf 64 Server.png)
+![LOAD_HTTP](doc/meatloaf64_svr.png)
