@@ -26,6 +26,7 @@ require_once("IMG_P00.php");
 require_once("IMG_D64.php");
 require_once("IMG_D71.php");
 require_once("IMG_D81.php");
+require_once("IMG_D8B.php");
 require_once("IMG_T64.php");
 require_once("IMG_TCRT.php");
 

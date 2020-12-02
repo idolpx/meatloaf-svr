@@ -1,31 +1,10 @@
 <?php
-/*
- *  Meat Loaf Server
- *  ---------------
- *
- *  Copyright (C) 2020, Jaime Johnston <jaime@idolpx.com>
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- */
-
 //
 // File Formats
 //
 // https://ist.uwaterloo.ca/~schepers/formats.html
 // https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/AE-File_Formats.html
+// https://www.backbit.io/downloads/Docs/BackBit%20Cartridge%20Documentation.pdf
 //
 //
 
@@ -124,6 +103,11 @@ if ( strlen( $image ) )
 				$fileSystem->sendListing();
 				break;
 				
+			case 'D8B':
+				$fileSystem = new IMG_D8B("$root$path$image");
+				$fileSystem->sendListing();
+				break;
+				
 			case 'T64':
 				$fileSystem = new IMG_T64("$root$path$image");
 				$fileSystem->sendListing();
@@ -153,7 +137,12 @@ if ( strlen( $image ) )
 				$fileSystem = new IMG_D81("$root$path$image");
 				$fileSystem->sendFile( $filename );
 				break;
-
+				
+			case 'D8B':
+				$fileSystem = new IMG_D8B("$root$path$image");
+				$fileSystem->sendFile( $filename );
+				break;
+				
 			case 'T64':
 				$fileSystem = new IMG_T64("$root$path$image");
 				$fileSystem->sendFile( $filename );
