@@ -163,12 +163,12 @@ else
 	switch ( $f_ext )
 	{
 		case 'DIR':
-			$fileSystem = new IMG_Native();
+			$fileSystem = new IMG_Native("$disk_name");
 			$fileSystem->sendListing();
 			break;
 		
 		case 'PRG':
-			$fileSystem = new IMG_Native();
+			$fileSystem = new IMG_Native("$disk_name");
 			$fileSystem->sendFile("$root$path$filename");
 			break;
 
