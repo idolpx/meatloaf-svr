@@ -28,8 +28,18 @@ class IMG_Native {
 	public $dir_max;
 	public $dir_count;
 	public $header;
+	public $disk_name;
+	public $disk_id;
+	public $dos_type;
 
 	protected $fp;
+
+	function __construct( $header )
+	{
+		$this->disk_name = $header;
+		$this->disk_id = "ID";
+		$this->dos_type = "99";
+	}
 
 	function sendLine($blocks, $line, $type)
 	{
