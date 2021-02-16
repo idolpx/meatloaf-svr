@@ -44,6 +44,7 @@ if ($filename == '')
 	$filename = '$';
 
 
-$show_nfo = true;		// Show selected URL, PATH, IMAGE in directory listing
-$show_hidden = false;	// Show hidden/deleted files in directory listing
+$disk_name = "MEATLOAF 64 ARCHIVE"; // Set default header
+$show_nfo = true;		    // Show selected URL, PATH, IMAGE in directory listing
+$show_hidden = false;	            // Show hidden/deleted files in directory listing
 ?>
