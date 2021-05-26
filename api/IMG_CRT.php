@@ -1,5 +1,4 @@
 <?php
-<?php
 /*
  *  Meat Loaf Server
  *  ---------------
