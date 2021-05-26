@@ -1,111 +1,111 @@
-docs/!INTRO.TXT
-docs/!LINKS.TXT
-docs/64LAN.TXT
-docs/64NET.TXT
-docs/ARC.TXT
-docs/ARK-SRK.TXT
-docs/BINARY.TXT
-docs/BITMAP.TXT
-docs/C64S_FRZ.TXT
-docs/CKIT.TXT
-docs/CPK.TXT
-docs/CRT.TXT
-docs/CVT.TXT
-docs/D2M-DNP.TXT
-docs/D64.TXT
-docs/D71.TXT
-docs/D80-D82.TXT
-docs/D81.TXT
-docs/DISK.TXT
-docs/EasyFlash-AppSupport.pdf
-docs/EasyFlash-ProgRef.pdf
-docs/EasySDK.pdf
-docs/F64.TXT
-docs/G64.TXT
-docs/GEOS.TXT
-docs/LBR.TXT
-docs/LHA.TXT
-docs/LNX.TXT
-docs/PC64_FRZ.TXT
-docs/PC64_ROM.TXT
-docs/PC64.TXT
-docs/PCLINK.TXT
-docs/PCVIC.TXT
-docs/PHAUZEH.TXT
-docs/Power64 Documentation - File Formats.html
-docs/POWER64.TXT
-docs/REL.TXT
-docs/SDA.TXT
-docs/SFX.TXT
-docs/SIDPLAY.TXT
-docs/SPYNE.TXT
-docs/T64.TXT
-docs/TAP.TXT
-docs/tapecart-tcrt-file-format-reference.pdf
-docs/TCRT-FileSystem.TXT
-docs/TCRT.TXT
-docs/VICE_FRZ.TXT
-docs/WAV.TXT
-docs/WRA-WR3.TXT
-docs/X64.TXT
-docs/ZIP_DISK.TXT
-docs/ZIP_FILE.TXT
-docs/ZIP_SIX.TXT
-docs/ZIP.TXT
-docs/Power64 Documentation - File Formats_files/ButtonFirst.gif
-docs/Power64 Documentation - File Formats_files/ButtonHomeWide.gif
-docs/Power64 Documentation - File Formats_files/ButtonLast.gif
-docs/Power64 Documentation - File Formats_files/ButtonNext.gif
-docs/Power64 Documentation - File Formats_files/ButtonPrev.gif
-docs/Power64 Documentation - File Formats_files/ButtonTopWide.gif
-docs/Power64 Documentation - File Formats_files/Cartridge.gif
-docs/Power64 Documentation - File Formats_files/Contents.gif
-docs/Power64 Documentation - File Formats_files/FlagGerman.gif
-docs/Power64 Documentation - File Formats_files/FlagItalian.gif
-docs/Power64 Documentation - File Formats_files/FlagSpanish.gif
-docs/Power64 Documentation - File Formats_files/Floppy35.gif
-docs/Power64 Documentation - File Formats_files/Floppy525.gif
-docs/Power64 Documentation - File Formats_files/Power64.css
-docs/Power64 Documentation - File Formats_files/Program.gif
-docs/Power64 Documentation - File Formats_files/RAM-Snapshot.gif
-docs/Power64 Documentation - File Formats_files/Sound.gif
-docs/Power64 Documentation - File Formats_files/Tape.gif
-docs/Power64 Documentation - File Formats_files/valid-html401.gif
-docs/Power64 Documentation - File Formats_files/ZipCode.gif
-docs/Tape Info Central/64loader.txt
-docs/Tape Info Central/180.txt
-docs/Tape Info Central/720.txt
-docs/Tape Info Central/ace.txt
-docs/Tape Info Central/actionreplay.txt
-docs/Tape Info Central/activision.txt
-docs/Tape Info Central/binarydesign.txt
-docs/Tape Info Central/Commodore 64 Tape Info Central.html
-docs/Tape Info Central/crl.txt
-docs/Tape Info Central/ddragon.txt
-docs/Tape Info Central/empire.txt
-docs/Tape Info Central/enigmavariations.txt
-docs/Tape Info Central/expert.txt
-docs/Tape Info Central/faq.html
-docs/Tape Info Central/fastload.txt
-docs/Tape Info Central/gremlin.txt
-docs/Tape Info Central/input64.txt
-docs/Tape Info Central/kettle.txt
-docs/Tape Info Central/mastertronic.txt
-docs/Tape Info Central/mikrogen.txt
-docs/Tape Info Central/newocean.txt
-docs/Tape Info Central/novaload.txt
-docs/Tape Info Central/ocean.txt
-docs/Tape Info Central/palace.txt
-docs/Tape Info Central/pavlodapenetrator.txt
-docs/Tape Info Central/players.txt
-docs/Tape Info Central/rainbird.txt
-docs/Tape Info Central/rom.txt
-docs/Tape Info Central/snakeload.txt
-docs/Tape Info Central/specialagent.txt
-docs/Tape Info Central/Tape-Image (.CDT) file format.html
-docs/Tape Info Central/tape.html
-docs/Tape Info Central/tengen.txt
-docs/Tape Info Central/turbo.txt
-docs/Tape Info Central/waveform.png
-docs/Tape Info Central/zoids.txt
-docs/Tape Info Central/zzap.txt
+!info/!INTRO.TXT
+!info/!LINKS.TXT
+!info/64LAN.TXT
+!info/64NET.TXT
+!info/ARC.TXT
+!info/ARK-SRK.TXT
+!info/BINARY.TXT
+!info/BITMAP.TXT
+!info/C64S_FRZ.TXT
+!info/CKIT.TXT
+!info/CPK.TXT
+!info/CRT.TXT
+!info/CVT.TXT
+!info/D2M-DNP.TXT
+!info/D64.TXT
+!info/D71.TXT
+!info/D80-D82.TXT
+!info/D81.TXT
+!info/DISK.TXT
+!info/EasyFlash-AppSupport.pdf
+!info/EasyFlash-ProgRef.pdf
+!info/EasySDK.pdf
+!info/F64.TXT
+!info/G64.TXT
+!info/GEOS.TXT
+!info/LBR.TXT
+!info/LHA.TXT
+!info/LNX.TXT
+!info/PC64_FRZ.TXT
+!info/PC64_ROM.TXT
+!info/PC64.TXT
+!info/PCLINK.TXT
+!info/PCVIC.TXT
+!info/PHAUZEH.TXT
+!info/Power64 Documentation - File Formats.html
+!info/POWER64.TXT
+!info/REL.TXT
+!info/SDA.TXT
+!info/SFX.TXT
+!info/SIDPLAY.TXT
+!info/SPYNE.TXT
+!info/T64.TXT
+!info/TAP.TXT
+!info/tapecart-tcrt-file-format-reference.pdf
+!info/TCRT-FileSystem.TXT
+!info/TCRT.TXT
+!info/VICE_FRZ.TXT
+!info/WAV.TXT
+!info/WRA-WR3.TXT
+!info/X64.TXT
+!info/ZIP_DISK.TXT
+!info/ZIP_FILE.TXT
+!info/ZIP_SIX.TXT
+!info/ZIP.TXT
+!info/Power64 Documentation - File Formats_files/ButtonFirst.gif
+!info/Power64 Documentation - File Formats_files/ButtonHomeWide.gif
+!info/Power64 Documentation - File Formats_files/ButtonLast.gif
+!info/Power64 Documentation - File Formats_files/ButtonNext.gif
+!info/Power64 Documentation - File Formats_files/ButtonPrev.gif
+!info/Power64 Documentation - File Formats_files/ButtonTopWide.gif
+!info/Power64 Documentation - File Formats_files/Cartridge.gif
+!info/Power64 Documentation - File Formats_files/Contents.gif
+!info/Power64 Documentation - File Formats_files/FlagGerman.gif
+!info/Power64 Documentation - File Formats_files/FlagItalian.gif
+!info/Power64 Documentation - File Formats_files/FlagSpanish.gif
+!info/Power64 Documentation - File Formats_files/Floppy35.gif
+!info/Power64 Documentation - File Formats_files/Floppy525.gif
+!info/Power64 Documentation - File Formats_files/Power64.css
+!info/Power64 Documentation - File Formats_files/Program.gif
+!info/Power64 Documentation - File Formats_files/RAM-Snapshot.gif
+!info/Power64 Documentation - File Formats_files/Sound.gif
+!info/Power64 Documentation - File Formats_files/Tape.gif
+!info/Power64 Documentation - File Formats_files/valid-html401.gif
+!info/Power64 Documentation - File Formats_files/ZipCode.gif
+!info/Tape Info Central/64loader.txt
+!info/Tape Info Central/180.txt
+!info/Tape Info Central/720.txt
+!info/Tape Info Central/ace.txt
+!info/Tape Info Central/actionreplay.txt
+!info/Tape Info Central/activision.txt
+!info/Tape Info Central/binarydesign.txt
+!info/Tape Info Central/Commodore 64 Tape Info Central.html
+!info/Tape Info Central/crl.txt
+!info/Tape Info Central/ddragon.txt
+!info/Tape Info Central/empire.txt
+!info/Tape Info Central/enigmavariations.txt
+!info/Tape Info Central/expert.txt
+!info/Tape Info Central/faq.html
+!info/Tape Info Central/fastload.txt
+!info/Tape Info Central/gremlin.txt
+!info/Tape Info Central/input64.txt
+!info/Tape Info Central/kettle.txt
+!info/Tape Info Central/mastertronic.txt
+!info/Tape Info Central/mikrogen.txt
+!info/Tape Info Central/newocean.txt
+!info/Tape Info Central/novaload.txt
+!info/Tape Info Central/ocean.txt
+!info/Tape Info Central/palace.txt
+!info/Tape Info Central/pavlodapenetrator.txt
+!info/Tape Info Central/players.txt
+!info/Tape Info Central/rainbird.txt
+!info/Tape Info Central/rom.txt
+!info/Tape Info Central/snakeload.txt
+!info/Tape Info Central/specialagent.txt
+!info/Tape Info Central/Tape-Image (.CDT) file format.html
+!info/Tape Info Central/tape.html
+!info/Tape Info Central/tengen.txt
+!info/Tape Info Central/turbo.txt
+!info/Tape Info Central/waveform.png
+!info/Tape Info Central/zoids.txt
+!info/Tape Info Central/zzap.txt
