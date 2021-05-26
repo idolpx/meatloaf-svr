@@ -1,4 +1,5 @@
 <?php
+<?php
 /*
  *  Meat Loaf Server
  *  ---------------
@@ -20,61 +21,64 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
-
+ 
 require_once("IMG_native.php");
+require_once("CRT_HW_TYPE.php");
 
 class IMG_CRT extends IMG_Native {
 	public $signature;
-	public $version;
-	public $data_address;
-	public $data_length;
-	public $call_address;
+	public $header_length;
+	public $crt_version;
+	public $hw_type;
+	public $exrom;
+	public $game;
 	public $filename;
 	public $flags;
 	public $file_size;
 	
-	private $fp;
 
 	function __construct( $image )
 	{
+		global $hw_type_array;
+		
 		if(file_exists($image) == 1)
 		{
+			$this->file_size = filesize( $image );
+			
 			$this->fp = fopen($image, 'rb');
 			
 			// CARTRIDGE
 			$this->signature	= fread($this->fp, 16); 							// Signature
 			$bytes   			= fread($this->fp, 4); 	
-			$this->header_size = ord($bytes[0]) + (ord($bytes[1]) * 0x100) + (ord($bytes[3]) * 0x1000) + (ord($bytes[4]) * 0x10000);												  // Header Size
+			$this->header_length = (ord($bytes[0]) * 0x10000) + (ord($bytes[1]) * 0x1000) + (ord($bytes[2]) * 0x100) + ord($bytes[3]);												  // Header Length
 			$bytes   			= fread($this->fp, 2); 	
-			$this->crt_version = ord($bytes[0]) + (ord($bytes[1]) * 0x100);			// Cart Version
+			$this->crt_version = ord($bytes[0]).".".ord($bytes[1]);			// Cart Version
 			$bytes   			= fread($this->fp, 2); 	
-			$this->hw_version = ord($bytes[0]) + (ord($bytes[1]) * 0x100);			// Cart HW Type
-			$this->exrom		= ord(fread($this-fp, 1);							// EXROM Line Status
-			$this->game			= ord(fread($this-fp, 1);							// GAME Line Status
+			$this->hw_type = $hw_type_array[(ord($bytes[0]) * 0x100) + ord($bytes[1])];	// Cart HW Type
+			$this->exrom		= ord(fread($this-fp, 1));							// EXROM Line Status
+			$this->game			= ord(fread($this-fp, 1));							// GAME Line Status
 			$bytes   			= fread($this->fp, 6);								// Reserved
-			$this->filename    	= fread($this->fp, 32);								// Filename
+			$this->filename    	= strtoupper(trim(fread($this->fp, 32)));			// Filename
 			$this->flags		= fread($this->fp, 2);								// Flags
 			
-			// CHIP
-			
-			
-			//$bytes				= fread($this->fp, 171);						// Loader Code
-			fseek($this->fp, 0xD4 + $offset);
-			$bytes				= fread($this->fp, 4);								// File Size
-			$this->$file_size = ord($bytes[0]) + (ord($bytes[1]) * 0x100) + (ord($bytes[3]) * 0x1000) + (ord($bytes[4]) * 0x10000);
+			// Minimum header length is $40
+			if ( $this->header_length < 0x40 )
+				$this->header_length = 0x40;
 
-/*			
-			echo "Signature: $this->signature\r\n";
-			echo "Version: $this->version\r\n";
-			echo "Data Address: $this->data_address\r\n";
-			echo "Data Length: $this->data_length\r\n";
-			echo "Call Address: $this->call_address\r\n";
+/*
+			echo "File Size: $this->file_size\r\n";
+			echo "Cartridge Signature: $this->signature\r\n";
+			echo "Header Length: $this->header_length\r\n";
+			echo "Cartridge Version: $this->crt_version\r\n";
+			echo "Hardware Type: $this->hw_type\r\n";
+			echo "EXROM Line Status: $this->exrom\r\n";
+			echo "GAME Line Status: $this->game\r\n";
 			echo "Filename: $this->filename\r\n";
 			echo "Flags: $this->flags\r\n";
-			echo "File Size: $this->file_size\r\n";
 			echo ftell($this->fp);
+			echo "\r\n\r\n\r\n";
 			exit();
-*/
+*/	
 		}
 	}
 	
@@ -92,7 +96,7 @@ class IMG_CRT extends IMG_Native {
 		global $show_nfo;
 		
 		// Send List HEADER
-		$this->sendLine(0, sprintf("\x12\"%-24s\" TCRT", $this->header), "NFO" );
+		$this->sendLine(0, sprintf("\x12\"%-24s\" CRT", $this->filename), "NFO" );
 		
 		// Send Extra INFO
 		if ( $show_nfo )
@@ -109,6 +113,8 @@ class IMG_CRT extends IMG_Native {
 				$this->sendLine(0, sprintf("\"%-24s\" NFO", "[IMAGE]"), "NFO" );
 				$this->sendLine(0, sprintf("\"%-24s\" NFO", $image), "NFO" );
 			}
+			$this->sendLine(0, sprintf("\"%-24s\" NFO", "[HW TYPE]"), "NFO" );
+			$this->sendLine(0, sprintf("\"%-24s\" NFO", $this->hw_type), "NFO" );
 			$this->sendLine(0, "\"------------------------\" NFO", "NFO" );
 		}
 	}
@@ -118,17 +124,26 @@ class IMG_CRT extends IMG_Native {
 		$this->sendHeader();
 		
 		// Read Directory Entries
-		fseek($this->fp, 0x107);
+		$chip = 0;
+		$next_chip = 0;
+		fseek($this->fp, $this->header_length);
 		do
 		{	
-			$filename 		= trim(fread($this->fp, 16));
-			$file_type		= ord(fread($this->fp, 1));
-			$bytes			= fread($this->fp, 2);
-			$data_offset	= (ord($bytes[0]) + (ord($bytes[1]) * 0x100) << 8) + 216;
-			$bytes			= fread($this->fp, 3);
-			$file_size		= ord($bytes[0]) + (ord($bytes[1]) * 0x100) + (ord($bytes[3]) * 0x1000);
-			$start_address  = fread($this->fp, 2);
-			$unused			= fread($this->fp, 8);
+			$signature   		= fread($this->fp, 4);								// CHIP header
+			$bytes   			= fread($this->fp, 4); 	
+			$packet_length = (ord($bytes[0]) * 0x10000) + (ord($bytes[1]) * 0x1000) + (ord($bytes[2]) * 0x100) + ord($bytes[3]);
+			$bytes   			= fread($this->fp, 2); 	
+			$chip_type    = (ord($bytes[0]) * 0x100) + ord($bytes[1]);				// Chip Type
+			$bytes   			= fread($this->fp, 2); 	
+			$bank_number  = (ord($bytes[0]) * 0x100) + ord($bytes[1]);				// Bank Number
+			$bytes   			= fread($this->fp, 2);
+			$load_address		= (ord($bytes[0]) * 0x100) + ord($bytes[1]); 		// Load Address				
+			$bytes   			= fread($this->fp, 2); 	
+			$file_size   = (ord($bytes[0]) * 0x100) + ord($bytes[1]);				// Image Size
+			
+			$filename = "Bank $bank_number, $".dechex($load_address);
+
+			$next_chip = ftell( $this->fp ) + $file_size;
 
 			$blocks = intval($file_size / 256);
 			
@@ -139,57 +154,71 @@ class IMG_CRT extends IMG_Native {
 				if ($blocks > 99) $block_spc--;
 				if ($blocks > 999) $block_spc--;
 			
-			
-/*			echo "Filename: $filename\r\n";
+/*
+			echo "CHIP: $chip\r\n";
+			echo "Signature: $signature\r\n";
 			echo "Type: $type\r\n";
-			echo "Data Offset: $data_offset\r\n";
+			echo "Packet Length: $packet_length\r\n";
+			echo "Chip Type: $chip_type\r\n";
+			echo "Bank Number: $bank_number\r\n";
+			echo "Load Address: $load_address\r\n";
 			echo "File Size: $file_size\r\n";
-			echo "Start Address: $start_address\r\n";
-			echo "Length: $blocks\r\n";
+			echo "Blocks: $blocks\r\n";
+			echo "Next CHIP: ".dechex($next_chip)."\r\n\r\n";
 			exit();
 */
-			if ( $file_type != 0xFF )
-			{
-				$line = sprintf("%s%-24s%s", str_repeat(" ", $block_spc), "\"".strtoupper($filename)."\"", $type);
-				$this->sendLine( $blocks, $line, $type );
-			}
-		} while ( $file_type != 0xFF );
+			$line = sprintf("%s%-24s%s", str_repeat(" ", $block_spc), "\"".strtoupper($filename)."\"", $type);
+			$this->sendLine( $blocks, $line, $type );
+
+			$chip++;
+			fseek( $this->fp, $file_size, SEEK_CUR );
+		}while ( $next_chip < $this->file_size );
 		
 		$this->sendFooter();
-	}
-
-	function sendFooter()
-	{
-		$this->sendLine( 65535, "BLOCKS FREE.", "NFO" );
-		echo "\n"; // Empty line to indicate end of directory	
 	}
 
 	function seekFile( $entry )
 	{
 		// Read Directory Entries
-		fseek($this->fp, 0x107);
+		$chip = 0;
+		$next_chip = 0;
+		fseek($this->fp, $this->header_length);
 		do
 		{		
-			$filename 		= trim(fread($this->fp, 16));
-			$file_type		= ord(fread($this->fp, 1));
-			$bytes			= fread($this->fp, 2);
-			$data_offset	= (ord($bytes[0]) + (ord($bytes[1]) * 0x100) << 8) + 216;
-			$bytes			= fread($this->fp, 3);
-			$file_size		= ord($bytes[0]) + (ord($bytes[1]) * 0x100) + (ord($bytes[3]) * 0x1000);
-			$start_address  = fread($this->fp, 2);
-			$unused			= fread($this->fp, 8);
+			$signature   		= fread($this->fp, 4);								// CHIP header
+			$bytes   			= fread($this->fp, 4); 	
+			$packet_length = (ord($bytes[0]) * 0x10000) + (ord($bytes[1]) * 0x1000) + (ord($bytes[2]) * 0x100) + ord($bytes[3]);
+			$bytes   			= fread($this->fp, 2); 	
+			$chip_type    = (ord($bytes[0]) * 0x100) + ord($bytes[1]);				// Chip Type
+			$bytes   			= fread($this->fp, 2); 	
+			$bank_number  = (ord($bytes[0]) * 0x100) + ord($bytes[1]);				// Bank Number
+			$bytes   			= fread($this->fp, 2);
+			$start_address   	= strrev($bytes);
+			$load_address		= (ord($bytes[0]) * 0x100) + ord($bytes[1]); 		// Load Address
+			$bytes   			= fread($this->fp, 2); 	
+			$file_size   = (ord($bytes[0]) * 0x100) + ord($bytes[1]);				// Image Size	
+
+//			$bytes   			= fread($this->fp, 2);
+//			$start_address   	= fread($this->fp, 2); 								// Start Address
+
+			$filename = "Bank $bank_number, $".dechex($load_address);
+			
+			$next_chip = ftell( $this->fp ) + $file_size;
 
 			$blocks = intval($file_size / 256);
 			
-			//echo "$i: [".$entry."] [$filename]\r\n";
+			//echo "$load_address: [".$entry."] [$filename]\r\n"; exit();
+
 			if ( $entry == strtoupper($filename) )
 			{
 				//echo $entry." ".$filename." [".$data_offset."] [".$file_size."]"; exit();
-				fseek($this->fp, $data_offset);
 				return Array( 'start'=>$start_address, 'length'=>$file_size );
 			}
-		} while ( $file_type != 0xFF );
-		echo "NOPE!"; exit();
+			
+			$chip++;
+			fseek( $this->fp, $file_size, SEEK_CUR );
+		} while ( $next_chip < $this->file_size );
+
 		return Array( 'start'=>0, 'length'=>0 );
 	}
 
@@ -197,6 +226,10 @@ class IMG_CRT extends IMG_Native {
 	{
 		//echo $filename; exit();
 		$ra = $this->seekFile( $filename );
+		
+		//echo $ra['start']."\r\n";
+		//echo $ra['length']."\r\n";
+		//exit();
 		
 		//Set Content Type
 		header('Content-Type: application/octet-stream');
