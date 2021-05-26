@@ -25,8 +25,11 @@ require_once("IMG_D8B.php");
 require_once("IMG_T64.php");
 require_once("IMG_TCRT.php");
 
-$url = "C64.IDOLPX.COM";
-$root = $_SERVER['DOCUMENT_ROOT']."/64/";
+// Base URL for server
+$url = "C64.MEATLOAF.CC";
+
+// Set this to the folder where your roms are stored
+$root = $_SERVER['DOCUMENT_ROOT']."/roms/";
 
 
 $path = $_GET['p'].$_POST['p'];
@@ -40,6 +43,6 @@ if ($filename == '')
 
 
 $disk_name = "MEATLOAF 64 ARCHIVE"; // Set default header
-$show_nfo = true;		    // Show selected URL, PATH, IMAGE in directory listing
+$show_nfo = true;		            // Show selected URL, PATH, IMAGE in directory listing
 $show_hidden = false;	            // Show hidden/deleted files in directory listing
 ?>
