@@ -117,6 +117,11 @@ if ( strlen( $image ) )
 				$fileSystem = new IMG_TCRT("$root$path$image");
 				$fileSystem->sendListing();
 				break;
+				
+			case 'CRT':
+				$fileSystem = new IMG_CRT("$root$path$image");
+				$fileSystem->sendListing();
+				break;
 		}
 	}
 	else
@@ -150,6 +155,11 @@ if ( strlen( $image ) )
 				
 			case 'TCRT':
 				$fileSystem = new IMG_TCRT("$root$path$image");
+				$fileSystem->sendFile( $filename );
+				break;
+				
+			case 'CRT':
+				$fileSystem = new IMG_CRT("$root$path$image");
 				$fileSystem->sendFile( $filename );
 				break;
 		}
