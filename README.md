@@ -4,7 +4,7 @@
 Server for hosting software via HTTP for use with [Meatloaf](https://github.com/idolpx/meatloaf). <br/>
 A Commodore 64/128 multi-device emulator.<br/>
 
-![LOAD_HTTP](doc/meatloaf64-svr.png)
+![LOAD_HTTP](docs/meatloaf64-svr.png)
 
 INSTALLATION
 * Copy the "api" folder to your PHP enabled webserver
