@@ -1,4 +1,4 @@
-@hostname = c64.idolpx.com
+@hostname = c64.meatloaf.cc
 @port = 80
 @host = {{hostname}}:{{port}}
 @path = /GAMES/
@@ -9,15 +9,15 @@
 GET http://{{host}}/api/?p={{path}}&i={{image}}&f={{file}} HTTP/1.1
 
 ###
-POST http://c64.idolpx.com/api/ HTTP/1.1
-User-Agent: MEAT LOAF 64 [20200923.01]
+POST http://{{host}}/api/ HTTP/1.1
+User-Agent: MEATLOAF CBM [20200923.01]
 Content-Type: application/x-www-form-urlencoded
 
 p={{path}}&i={{image}}&f={{file}}
 
 ###
-POST http://c64.idolpx.com/api/ HTTP/1.1
-User-Agent: MEAT LOAF 64 [20200923.01]
+POST http://{{host}}/api/ HTTP/1.1
+User-Agent: MEATLOAF CBM [20200923.01]
 Content-Type: application/x-www-form-urlencoded
 
 p={{path}}&i={{image}}&f={{file}}
