@@ -1,6 +1,6 @@
 <?php
 /*
- *  Meat Loaf Server
+ *  Meatloaf Server
  *  ---------------
  *
  *  Copyright (C) 2020, Jaime Johnston <jaime@idolpx.com>
