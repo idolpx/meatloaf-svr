@@ -184,20 +184,17 @@ else
 			$fileSystem = new IMG_Native("$disk_name");
 			$fileSystem->sendListing();
 			break;
-		
-		case 'PRG':
-			$fileSystem = new IMG_Native("$disk_name");
-			$fileSystem->sendFile("$root$path$filename");
-			break;
 
 		case 'P00':
 			$fileSystem = new IMG_P00("$root$path$filename");
 			$fileSystem->sendFile();
 			break;
 			
-		//default:
-		//	sendLine( 0, "FILE NOT FOUND", "NFO" );
-		//	echo "\n"; // Empty line to indicate end of directory
+		default:
+			//sendLine( 0, "FILE NOT FOUND", "NFO" );
+			//echo "\n"; // Empty line to indicate end of directory
+			$fileSystem = new IMG_Native("$disk_name");
+			$fileSystem->sendFile("$root$path$filename");
 	}
 }
 ?> 
