@@ -10,6 +10,11 @@ INSTALLATION
 ------------
 * Copy the "api" folder to your PHP enabled webserver
 * Edit the settings in "api/config.php"
+* On your C64  with Meatloaf attached enter:
+  
+  ```
+  LOAD"HTTP://YOURDOMAIN.COM",8 
+  ```
 
 
 TODO
