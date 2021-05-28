@@ -31,6 +31,10 @@ $url = "C64.MEATLOAF.CC";
 // Set this to the folder where your roms are stored
 $root = $_SERVER['DOCUMENT_ROOT']."/roms/";
 
+$disk_name = "MEATLOAF 64 ARCHIVE"; // Set default listing header
+$show_nfo = true;		            // Show selected URL, PATH, IMAGE in directory listing
+$show_hidden = false;          		// Show hidden/deleted files in directory listing
+
 
 $path = $_GET['p'].$_POST['p'];
 if ($path == '')
@@ -41,8 +45,4 @@ $filename = $_GET['f'].$_POST['f'];
 if ($filename == '')
 	$filename = '$';
 
-
-$disk_name = "MEATLOAF 64 ARCHIVE"; // Set default header
-$show_nfo = true;		            // Show selected URL, PATH, IMAGE in directory listing
-$show_hidden = false;	            // Show hidden/deleted files in directory listing
 ?>
