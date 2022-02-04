@@ -1,0 +1,25 @@
+BODY { color: black; background: white }
+
+A:link    { color: #0000FF; background: white }
+A:visited { color: #FF00FF; background: white }
+A:active  { color: #FF0000; background: white }
+
+H1 { color: #FF0000; background: white; font-weight: normal; font-family: Times, serif; text-decoration: underline}
+H2 { color: #0000FF; background: white; font-weight: normal; font-family: Times, serif; text-decoration: underline}
+
+P.address  { margin-left: 2em }
+
+DIV.address  { margin-left: 2em }
+DIV.commandlist { text-indent: -1.0em; margin-left: 1.0em;
+                padding: 0cm }
+DIV.xcommandlist { text-indent: -1.5em; margin-left: 1.5em;
+                padding: 0cm }
+DIV.faq { text-indent: -1.0em; margin-left: 1.0em;
+                padding: 0cm }
+DIV.syntax  { text-indent: -1.0em; margin-left: 1.0em;
+                padding: 0cm; }
+DIV.example { text-indent: -1.0em; margin-left: 1.0em;
+                padding: 0cm; }
+EM.copyright { color: #FF0000; background: white }
+DIV.compresslist { text-indent: -2.0em; margin-left: 2.0em;
+                padding: 0cm }

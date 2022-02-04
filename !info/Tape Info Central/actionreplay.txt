@@ -1,0 +1,31 @@
+Action Replay cartridge loader
+==============================
+  info by Fabrizio Gennari <fabrizio.ge@tiscalinet.it>
+
+Used by the Action Replay cartridge to save freezed games.
+
+Encoding:
+---------
+
+In the pilot tone, sync sequence and first bytes of header, pulses are like this:
+ Threshold: $1D0 (464) clock cycles
+ Bit 0: TAP byte $23
+ Bit 1: TAP byte $53
+
+Data Endianess: LEAST Significant bit First
+
+ Lead-In :  a stream of 1's, typically about 2048 of them, followed by a single 0 bit
+ Sync sequence:  $52, $42
+
+Structure:
+----------
+ 00-01 Complement of length of data (High, Low byte)
+ 02-03 Start Address of data        (High, Low byte)
+ 04    Checksum (XOR of all data bytes)
+ 05    discarded (typically $00)
+ 06    Low byte of threshold for data bytes
+ 07    discarded (typically $00)
+ 08    Data bytes
+
+To calculate the number of data bytes, do 65536-complement of length. To calculate threshold for data bytes, do $100+low byte. There are two possibilities for the threshold: $1D0 (in that case, following pulses are identical to previous ones: this is the case of Turbo backup) and $111 (in that case, pulses are TAP bytes $13 for 0 and $2B for 1: that is the case of Superturbo backup)
+

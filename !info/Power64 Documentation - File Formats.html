@@ -1,0 +1,1377 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html lang="en"><head>
+<title>Power64 Documentation - File Formats</title>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+<link rel="stylesheet" type="text/css" media="screen" href="Power64%20Documentation%20-%20File%20Formats_files/Power64.css">
+<link rel="icon" title="Icon" href="https://www.infinite-loop.at/Power64/Documentation/Images/Commodore.ico">
+<link rel="shortcut icon" title="Icon" href="https://www.infinite-loop.at/Power64/Documentation/Images/Commodore.ico">
+<link rel="home" href="http://www.infinite-loop.at/index.html">
+<link rel="contents" href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/00-Contents.html">
+<link rel="index" href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/00-Contents.html">
+<link rel="first" href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/00-Titlepage.html">
+<link rel="prev" href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/AD-Custom_Chips.html">
+<link rel="next" href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/AF-Emulator_Detection.html">
+<link rel="last" href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/AF-Emulator_Detection.html">
+<link rel="up" href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/00-Titlepage.html">
+<link rel="top" href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/00-Titlepage.html">
+<link rel="chapter" title="Title Page" href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/00-Titlepage.html">
+<link rel="chapter" title="1. Copyright &amp; Registration" href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/01-Copyright.html">
+<link rel="chapter" title="2. Quick Start" href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/02-Quick_Start.html">
+<link rel="chapter" title="3. Getting more C64 Games for Power64" href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/03-Software.html">
+<link rel="chapter" title="4. Basic Usage" href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/04-Basic_Usage.html">
+<link rel="chapter" title="5. Devices" href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/05-Commodore_C64.html">
+<link rel="chapter" title="6. Monitor/Debugger" href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/06-Monitor.html">
+<link rel="chapter" title="7. Built-In Programs" href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/07-BuiltIn_Programs.html">
+<link rel="chapter" title="8. GEOS" href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/08-GEOS.html">
+<link rel="chapter" title="9. Version History" href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/09-Version_History.html">
+<link rel="chapter" title="10. Thanks" href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/10-Thanks.html">
+<link rel="chapter" title="A: Commodore 64 BASIC V2" href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/AA-C64_BASIC.html">
+<link rel="chapter" title="B: Floppy Disk Commands" href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/AB-Floppy_Commands.html">
+<link rel="chapter" title="C: M6510 Assembler" href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/AC-6510_Assembler.html">
+<link rel="chapter" title="D: C64 Custom Chips" href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/AD-Custom_Chips.html">
+<link rel="chapter" title="E: Emulator File Formats" href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/AE-File_Formats.html">
+<link rel="chapter" title="F: Emulator Detection" href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/AF-Emulator_Detection.html">
+<link rel="alternate" href="https://www.infinite-loop.at/Power64/Documentation/Power64-LiesMich/AE-Dateiformate.html" hreflang="de" title="Dateiformate (Deutsch)">
+<link rel="alternate" href="https://www.infinite-loop.at/Power64/Documentation/Power64-Leame/AE-Formatos_Ficheros.html" hreflang="es" title="Formatos de Fichero del Emulador (Español)">
+<link rel="alternate" href="https://www.infinite-loop.at/Power64/Documentation/Power64-Leggimi/AE-Formati_File.html" hreflang="it" title="Formati File dell'Emulatore (Italiano)">
+<meta name="description" content="Power64 - Commodore64 Emulator for the Power Macintosh">
+<meta name="keywords" content="Power64, Emulation, Emulator, Commodore, 64, Commodore64, C64, C=64, CBM, CBM64, Macintosh, Mac, MacOS, OS X, Apple, PowerPC, intel">
+<meta name="language" content="en">
+<meta name="copyright" content="Copyright by Roland Lieger - support&lt;at&gt;salto&lt;dot&gt;at">
+<meta name="author" content="Roland Lieger, Goethegasse 39, A-2340 Mödling, Austria - Europe">
+<meta name="robots" content="index, follow">
+<!-- base href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/AE-File_Formats.html" -->
+</head>
+<body vlink="#CC00CC" text="#000000" link="#0000CC" bgcolor="#FFFFFF" alink="#CC0000">
+
+<a name="TopOfPage"></a>
+
+<table width="100%" cellspacing="0" cellpadding="0"><tbody><tr>
+  <td width="80" align="left">
+    <table>
+      <tbody><tr><td align="center">
+       <a href="http://www.infinite-loop.at/">
+    <img src="Power64%20Documentation%20-%20File%20Formats_files/ButtonHomeWide.gif" alt="Home" width="44" height="24" border="0"></a>
+      </td></tr>
+      <tr><td align="center">
+        <a href="http://www.infinite-loop.at/">Home</a>
+      </td></tr>
+    </tbody></table>
+  </td>
+  <td align="center">
+    <table>
+      <tbody><tr><td align="center">
+        <a href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/00-Titlepage.html">
+          <img src="Power64%20Documentation%20-%20File%20Formats_files/ButtonFirst.gif" alt="First" width="24" height="24" border="0"></a>
+        <a href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/AD-Custom_Chips.html">
+          <img src="Power64%20Documentation%20-%20File%20Formats_files/ButtonPrev.gif" alt="Prev" width="24" height="24" border="0"></a>
+        <a href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/00-Contents.html">
+          <img src="Power64%20Documentation%20-%20File%20Formats_files/Contents.gif" alt="Contents" width="156" height="24" border="0"></a>
+        <a href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/AF-Emulator_Detection.html">
+          <img src="Power64%20Documentation%20-%20File%20Formats_files/ButtonNext.gif" alt="Next" width="24" height="24" border="0"></a>
+        <a href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/AF-Emulator_Detection.html">
+          <img src="Power64%20Documentation%20-%20File%20Formats_files/ButtonLast.gif" alt="Last" width="24" height="24" border="0"></a>
+      </td></tr>
+      <tr><td align="center">
+        <a href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/00-Titlepage.html">First</a> -
+        <a href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/AD-Custom_Chips.html">Prev</a> -
+        <a href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/00-Contents.html">Contents</a> -
+        <a href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/AF-Emulator_Detection.html">Next</a> -
+        <a href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/AF-Emulator_Detection.html">Last</a>
+      </td></tr>
+    </tbody></table>
+  </td>
+  <td width="150" align="right">
+    <table>
+      <tbody><tr><td align="center">
+         <a href="https://www.infinite-loop.at/Power64/Documentation/Power64-LiesMich/AE-Dateiformate.html">
+         <img src="Power64%20Documentation%20-%20File%20Formats_files/FlagGerman.gif" alt="Deutsch" width="44" height="24" border="0"></a>
+         <a href="https://www.infinite-loop.at/Power64/Documentation/Power64-Leame/AE-Formatos_Ficheros.html">
+         <img src="Power64%20Documentation%20-%20File%20Formats_files/FlagSpanish.gif" alt="Español" width="44" height="24" border="0"></a>
+         <a href="https://www.infinite-loop.at/Power64/Documentation/Power64-Leggimi/AE-Formati_File.html">
+         <img src="Power64%20Documentation%20-%20File%20Formats_files/FlagItalian.gif" alt="Italiano" width="44" height="24" border="0"></a>
+      </td></tr>
+      <tr><td align="center">
+         <a href="https://www.infinite-loop.at/Power64/Documentation/Power64-LiesMich/AE-Dateiformate.html">Deutsch</a> -
+         <a href="https://www.infinite-loop.at/Power64/Documentation/Power64-Leame/AE-Formatos_Ficheros.html">Español</a> -
+         <a href="https://www.infinite-loop.at/Power64/Documentation/Power64-Leggimi/AE-Formati_File.html">Italiano</a>
+      </td></tr>
+    </tbody></table>
+  </td>
+</tr></tbody></table>
+
+<hr>
+
+<a name="StartOfText"></a>
+<h1>Appendix E: Emulator File Formats</h1>
+
+<p>
+This section describes all the common file formats in the field of 
+Commodore 64 emulation. It is intended for the interested programmer, 
+who might wish to learn the internal workings of the emulator. If you 
+are only interested in playing your favorite C64 game, then you do not 
+need to worry about these details.
+</p>
+
+<p>
+Power64 uses different icons for the various file format. Since Power64 
+allows the use of GZ/ZIP or LHA compressed files, many of the icons come
+ in three subtypes. A plain icon for uncompressed files, a icon with a 
+yellow ribbon to indicate GZ compression and an icon with a red ribbon 
+for ZIP compression. LHA compressed files do not carry a special icon 
+indicating the file type. Since they are so rare, a simple LHA-document 
+icon is used for all types of LHA compressed files.
+</p>
+
+<a name="Section E.1"></a>
+<table width="100%"><tbody><tr>
+<td align="left">
+<h2>E.1 *.P00 Program Format</h2>
+</td>
+<td align="right"><img src="Power64%20Documentation%20-%20File%20Formats_files/Program.gif" alt="P00 Icon" width="104" height="32"></td>
+</tr></tbody></table>
+
+<p>
+The *.P00 format is a flexible file format, that is able to support all 
+common types of C64 files. As it has a magic constant at the head of the
+ file it also enables the emulator to make sure that no invalid files 
+are used. This makes it the recommended file format for single files.
+</p>
+
+<pre>typedef struct
+ {
+  Byte P00Magic[8];    /* $00 - $07 */
+  Byte OrigFName[17];  /* $08 - $18 */
+  Byte RecordSize;     /* $19 */
+  Byte Data[n];        /* $1A - ... */
+ } P00File;</pre>
+
+<table>
+<tbody><tr><td valign="top"><tt>P00Magic</tt></td>  <td>- Magic constant 'C64File' = {$43, $36, $34, $46, $69, $6C, $65, $00}</td></tr>
+<tr><td valign="top"><tt>OrigFName</tt></td> <td>- Original C64 filename (CBM Charset)</td></tr>
+<tr><td valign="top"><tt>RecordSize</tt></td><td>- Record size for RELative files</td></tr>
+<tr><td valign="top"><tt>Data</tt></td>      <td>- The actual data</td></tr>
+</tbody></table>
+
+<p>
+This file format was first used by Wolfgang Lorenz in PC64. Note that 
+the extension *.P00 is not fix. rather the 'P' stands for 'PRG' and can 
+become an 'S' for 'SEQ', or 'R' for 'REL'. Furthermore the '00' can be 
+used count to '01','02','03'... to resolve name conflicts caused by 
+truncation a 16 character C64 filename to a 8+3 MS-DOS name. Of course 
+this is not relevant on a Macintosh, it's just a hint if you should ever
+ happen to run across a *.P01 file.
+</p>
+
+<a name="Section E.2"></a>
+<table width="100%"><tbody><tr>
+<td align="left">
+<h2>E.2 *.C64 Program Format</h2>
+</td>
+<td align="right"><img src="Power64%20Documentation%20-%20File%20Formats_files/Program.gif" alt="C64/PRG Icon" width="104" height="32"></td>
+</tr></tbody></table>
+
+<p>
+The *.C64 format is the exact format that the original Commodore 64 uses to store a programs to either disk or tape.
+</p>
+
+<pre>typedef struct
+ {
+  Byte LoadAddrLow, LoadAddrHigh; /* $00 - $01 */
+  Byte PrgData[n];                /* $02 - ... */
+ } C64File;</pre>
+
+<table>
+<tbody><tr><td valign="top"><tt>LoadAddr</tt></td> <td>- The address in C64 RAM at which the program will get stored when loaded with secondary device number 1.</td></tr>
+<tr><td valign="top"><tt>PrgData</tt></td>  <td>- The actual program.</td></tr>
+</tbody></table>
+
+<p>
+This file format was introduced to the world of emulators by Miha 
+Peternel in C64S. As can be seen from the above description this is a 
+rather simple file format. Still it's use is not recommended as it does 
+not provide the emulator with any possibility to make sure that only 
+valid files are used.
+</p>
+
+<a name="Section E.3"></a>
+<table width="100%"><tbody><tr>
+<td align="left">
+<h2>E.3 *.X64 Floppy Disk Image Format</h2>
+</td>
+<td align="right"><img src="Power64%20Documentation%20-%20File%20Formats_files/Floppy525.gif" alt="X64 Icon" width="104" height="32"></td>
+</tr></tbody></table>
+
+<p>
+The *.X64 format is flexible format for disk image files that supports a
+ wide range of floppy disks. Note so, that the implementation of *.X64 
+in Power64 can only handle 1541 disks.
+</p>
+
+<pre>typedef struct
+ {
+  Byte X64Magic[4];   /* $00 - $03 */
+  Byte Version[2];    /* $04 - $05 */
+  Byte DiskType;      /* $06 */
+  Byte TrackCnt;      /* $07 */
+  Byte SecondSide;    /* $08 */
+  Byte ErrorFlag;     /* $09 */
+  Byte Reserved[22];  /* $0A - $1F */
+  Byte DiskInfo[31];  /* $20 - $3E */
+  Byte ConstZero;     /* $3F */
+  Byte DiskImage[683 * 256];
+ } X64File;</pre>
+
+<table>
+<tbody><tr><td valign="top"><tt>X64Magic  </tt></td> <td>- Magic constant 'C'1541/64 = <tt>{$43, $15, $41, $64}</tt></td></tr>
+<tr><td valign="top"><tt>Version   </tt></td> <td>- C1541 Version 2.6 = <tt>{$02, $06}</tt></td></tr>
+<tr><td valign="top"><tt>DiskType  </tt></td> <td>- Floppy disk type: 1541 = <tt>{$01}</tt>
+             Other defined values: (not usable for Power64)<br>
+   <tt> 0..1540, 1..1541, 2..1542, 3..1551,<br>
+        4..1570, 5..1571, 6..1572, 8..1581,<br>
+       16..2031&amp;4031, 17..2040&amp;3040, 18..2041<br>
+       24..4040,<br>
+       32..8050, 33..8060, 34..8061,<br>
+       48..SFD 1001, 49..8250, 50..8280</tt></td></tr>
+<tr><td valign="top"><tt>TrackCnt</tt></td>  <td>- Number of Tracks on the Disk (Side 0) = {35}</td></tr>
+<tr><td valign="top"><tt>SecondSide</tt></td><td>- Is it a Double Sided Disks (0..No, 1..Yes) = {$00}</td></tr>
+<tr><td valign="top"><tt>ErrorFlag</tt></td> <td>- Flag for Error (precise meaning unclear) (unused)</td></tr>
+<tr><td valign="top"><tt>Reserved</tt></td>  <td>- Must be $00</td></tr>
+<tr><td valign="top"><tt>DiskInfo</tt></td>  <td>- Description of the Disk Image (in ASCII or ISO Latin/1)</td></tr>
+<tr><td valign="top"><tt>ConstZero</tt></td> <td>- Must be $00</td></tr>
+<tr><td valign="top"><tt>DiskImage</tt></td>  <td>- 683 disk sectors of 256 bytes each.</td></tr>
+</tbody></table>
+<p>
+For more information on DiskImage see also: *.D64.
+</p>
+
+<p>
+The *.X64 disk image format was originally created by Teemu Rantanen for use in X64.<br>
+As *.X64 uses a well defined header the emulator is able to make sure 
+that only valid files are used. This is a clear advantage over the 
+(unfortunately more widespread) *.D64 format.
+</p>
+
+<a name="Section E.4"></a>
+<table width="100%"><tbody><tr>
+<td align="left">
+<h2>E.4 *.D64 Floppy Disk Image Format</h2>
+</td>
+<td align="right"><img src="Power64%20Documentation%20-%20File%20Formats_files/Floppy525.gif" alt="D64 Icon" width="104" height="32"></td>
+</tr></tbody></table>
+
+<p>
+The *.D64 file format is a 1:1 copy of all sectors as they appear on a 
+floppy disk. On a C1541 formatted disk (and thus also in a *.D64 file) 
+each sector consists of 256 Byte. In order to be able to deal with bad 
+sectors the *.D64 format optionally features an additional error byte 
+per sector. A disk that was formatted by using the standard C1541 
+command NEW will have 35 tracks containing a total of 683 sectors. With 
+the use of special software it is possible to format and write disks 
+with up to 40 (or rarely even 42) tracks. While the extra tracks are not
+ within the original specification such disks are readable with most 
+C1541 drives (Note: Reading does not require special software.).
+</p>
+
+<p>
+Currently there are four different types of *.D64 formats:<br>
+</p>
+<ul>
+<li>  683 Sectors (= 35 Tracks) without error info<br>
+   (Total Size: 174848 Byte = 170.75 KByte)<br>
+</li><li>  683 Sectors (= 35 Tracks) with error info<br>
+   (Total Size: 175531 Byte = 171.42 KByte)<br>
+</li><li>  768 Sectors (= 40 Tracks) without error info<br>
+   (Total Size: 196608 Byte = 192 KByte)<br>
+</li><li>  768 Sectors (= 40 Tracks) with error info<br>
+   (Total Size: 197376 Byte = 192.75 KByte)
+</li><li>  802 Sectors (= 42 Tracks) without error info<br>
+   (Total Size: 205312 Byte = 200.5 KByte)<br>
+</li><li>  802 Sectors (= 42 Tracks) with error info<br>
+   (Total Size: 206114 Byte = 201.28 KByte)
+</li></ul>
+
+<p>
+Note that tracks at the outside edge of the disk contain more sectors 
+than those near to the disks center (Zone Bit Recording). The number of 
+sectors on each track is:<br>
+      Tracks   1..17 - 21 Sectors<br>
+      Tracks 18..24 - 19 Sectors<br>
+      Tracks 25..30 - 18 Sectors<br>
+      Tracks 31..35 - 17 Sectors<br>
+      Tracks 36..42 - 17 Sectors (non standard!)
+</p>
+
+<p>
+The Block Allocation Map (BAM) is stored on track 18 - sector 0; the directory starts at track 18 - sector 1.
+</p>
+
+<p>
+For storage in a *.D64 image the sectors are arranged in the following way:
+</p>
+<pre>  Track  1 - Sector  0: Offset   0 * 256
+  Track  1 - Sector  1: Offset   1 * 256
+                .....
+  Track  1 - Sector 20: Offset  20 * 256
+  Track  2 - Sector  0: Offset  21 * 256
+  Track  2 - Sector  1: Offset  22 * 256
+                .....
+  Track  2 - Sector 20: Offset  41 * 256
+  Track  3 - Sector  0: Offset  42 * 256
+                .....
+  Track 18 - Sector  0: Offset 357 * 256
+  Track 18 - Sector  1: Offset 358 * 256
+                .....
+  Track 35 - Sector  0: Offset 666 * 256
+  Track 35 - Sector  1: Offset 667 * 256
+                .....
+  Track 35 - Sector 16: Offset 682 * 256</pre>
+
+<p>
+Note that tracks are counted starting with track 1, while sector numbers start with 0.
+</p>
+
+<pre>typedef struct
+ {
+  Byte DiskImage[SektorCnt][256];
+  Byte ErrorInfo[SektorCnt]; /* Optional */
+ } D64File;</pre>
+
+<table>
+<tbody><tr><td valign="top"><tt>DiskImage</tt></td><td>- 256 Bytes per Sector</td></tr>
+<tr><td valign="top"><tt>ErrorInfo</tt></td><td>- 1 Byte per Sector</td></tr>
+</tbody></table>
+<p>
+Note that the error information for all sectors is concentrated  at the 
+end of the file. There is no interleaving of disk image data and error 
+information on a per sector basis.<br>
+The meaning of the ErrorInfo is given in the following table:
+</p>
+<pre>    Code  Error  Type   1541 error description
+    ----  -----  ----   ------------------------------
+     01    00    N/A    No error, Sektor ok.
+     02    20    Read   Header block not found
+     03    21    Seek   No sync character
+     04    22    Read   Data block not present
+     05    23    Read   Checksum error in data block
+     06    24    Write  Write verify (on format)
+     07    25    Write  Write verify error
+     08    26    Write  Write protect on
+     09    27    Seek   Checksum error in header block
+     0A    28    Write  Write error
+     0B    29    Seek   Disk ID mismatch
+     0F    74    Read   Disk Not Ready (no device 1)
+</pre>
+
+<a name="Section E.5"></a>
+<table width="100%"><tbody><tr>
+<td align="left">
+<h2>E.5 ZipCode Disk Format (1!*, 2!*, etc.)</h2>
+</td>
+<td align="right"><img src="Power64%20Documentation%20-%20File%20Formats_files/ZipCode.gif" alt="ZipCode Icon" width="104" height="32"></td>
+</tr></tbody></table>
+
+<p>
+This is a compressed version of a D64 file that is frequently found on 
+C64 sites that have already been around for a long time (and have served
+ C64 owners before emulation became common). A single D64 file is split 
+into 4 (35 tracks) or 5 (40 tracks) segments. Each part is then packed 
+using the simple (and poorly compressing) Run Length Encoding 
+compression method.
+</p>
+
+<p>
+The primary reason for the existence of this file format is that every 
+segment of such a ZipCode File is less than 44 KByte in size, and can 
+thus easily be handled by a real C64 and its 1541 disk drive (say after 
+transmission via modem from a BBS). Furthermore packing and unpacking 
+are very fast on a C64.
+</p>
+
+<p>
+Modern computers, like a Power Macintosh, that are used to run C64 
+emulators have no problem handling files 171KByte in size (like D64 
+files), so they do not benefit from splitting one 'large' file in 
+several smaller. In fact, due to the large allocations units of modern 
+hard disks and CD-ROMs the space wasted by 4 half filled last blocks of 
+the 4 files is likely to exceeds the savings from compression for 
+reasonable well filled floppy disks. Furthermore modern compression 
+formats like Zip, GZ, LHA or SIT offer much better compression that the 
+RLE used in the ZipCode.
+</p>
+
+<p>
+While ZipCode is not the best choice of a file format for an emulator it
+ is still a good format on a real C64 and many sites offer their files 
+in ZipCode format to support the faithful C64-addicts that stick to the 
+real hardware.
+</p>
+
+<p>
+Note that there are also two other Zip formats for the C64, that are not
+ supported by Power64. They use the filename-prefixes 1!!, 2!!, 3!!…  
+and A!, B!, C!…  respectively. They are described in the File Format 
+collection of Peter Schepers the author of 64COPY 
+(schepers@dcs1.uwaterloo.ca), but I have never seen files in either 
+format anywhere on the web.
+</p>
+
+<p>
+The contents of the floppy disk is divided onto the 4 or 5 segments according to the following table:<br>
+</p>
+<pre>   FileName  Track Range  Block Count
+   --------  -----------  -----------
+   1!xxxxxx     1 - 8     168 Sectors
+   2!xxxxxx     9 - 16    168 Sectors
+   3!xxxxxx    17 - 25    172 Sectors
+   4!xxxxxx    26 - 35    175 Sectors
+   5!xxxxxx    36 - 40     85 Sectors (only for 40 track disk images)</pre>
+
+<p>
+All segments have a similar structure based on compressed disk sectors. 
+Note that the first segments header is slightly different from the rest.
+</p>
+
+<pre>typedef struct
+ {
+  Byte LoadAddr[2];     /* Konst. $03FE = { 0xFE, 0x03}; */
+  Byte FloppyID[2];
+  ZipSektor Image[168];
+ } ZipSegment_1!;</pre>
+
+<pre>typedef struct
+ {
+  Byte LoadAddr[2];     /* Konst. $0400 = { 0x00, 0x04}; */
+  ZipSektor Image[...];
+ } ZipSegment_n!;       /* n = {2, 3, 4, 5} */
+</pre>
+
+<p>
+Compression takes place on a sector per sector basis. For each sector there is the following structure:
+</p>
+
+<pre>typedef struct
+ {
+  Byte Track;     /* Track Number and Compression Mode */
+  Byte Sector;    /* Sector Number */
+  union {
+    { Byte NoCompression[256]; } Mode00;
+    { Byte SingleByte; } Mode01;
+    { Byte Length;
+      Byte RepeatChar;
+      Byte RLEData[Length]; } Mode10;
+   } Data;
+ } ZipSector;</pre>
+
+<table>
+<tbody><tr><td valign="top"><tt>Track</tt></td> <td>- Gives the track number of the compressed sector in Bit 5 to Bit 0. Bits 7&amp;6 give the compression mode.</td></tr>
+<tr><td valign="top"><tt>Sector</tt></td><td>- Gives the sector number of the compressed sector.</td></tr>
+<tr><td valign="top"><tt>Data</tt></td>  <td>- The meaning of <tt>Data</tt> depends on the compression mode.</td></tr>
+</tbody></table>
+
+<p>
+Compression Modes:
+</p>
+<div class="compresslist">
+00 - No compression; The sector is stored in full. The 256 Data Bytes give the sectors contents.
+</div>
+<div class="compresslist">
+01 - The entire sector is filled with a single Byte. A single Data Byte will be repeated 256 times to fill the sector.
+</div>
+<div class="compresslist">
+10 - Run Length Encoded Sector - <tt>Length</tt> gives the number of Bytes of compressed RLEData. <tt>RepeatChar</tt> is a Byte that does not appear in the original sector and that is now used as a marker for runlength encoded pieces of data. <tt>RLEData</tt>  different from <tt>RepeatChar</tt> is just plain, uncompressed data, that can be directly copied. After <tt>RepeatChar</tt> is encountered, the next Byte of <tt>RLEData</tt> gives the Length of the Run and a third Byte denotes the Byte to be repeated.
+</div>
+<div class="compresslist">
+11 -Unused
+</div>
+
+<p>
+The sectors of a track are NOT stored in a linear fashion (1, 2, 3, 4…).
+ To make packing and unpacking much faster on a real 1541 interleaving 
+is used. The proper sequence of sectors depends on the number of sectors
+ in a track and can be seen below.
+</p>
+<pre>Track  1-17: 0 11 1 12 2 13 3 14 4 15 5 16 6 17 7 18 8 19 9 20 10
+Track 18-24: 0 10 1 11 2 12 3 13 4 14 5 15 6 16 7 17 8 18 9
+Track 25-30: 0  9 1 10 2 11 3 12 4 13 5 14 6 15 7 16 8 17
+Track 31-40: 0  9 1 10 2 11 3 12 4 13 5 14 6 15 7 16 8</pre>
+
+<p>
+Example for the first few sectors of the first segment (1!*):
+</p>
+<pre>$0000: 0xFE, 0x03,       /* Load Addr. Const $03FE */
+$0002: 0x36, 0x34,       /* Floppy ID */
+$0004: 0x41, 0x00, 0x00, /* Track 1, Sector  0 filled with 0x00 */
+$0007: 0x41, 0x0B, 0x00, /* Track 1, Sector 11 filled with 0x00 */
+$000B: 0x41, 0x01, 0x00, /* Track 1, Sector  1 filled with 0x00 */
+$0007: 0x01, 0x0C,       /* Track 1, Sector 12 uncompressed Data */
+... 256 Byte Data ...
+$0109: 0x81, 0x02,       /* Track 1 ,Sector 2 RLE Encoded */
+       0x12, 0xEA,       /* 0x12(18) Byte, RepeatChar: 0xEA */
+       0x45, 0x22, 0x34, 0x08,/* Plain Data */
+       0xEA, 0xD0, 0x77,      /* 0x77 repeated 0xD0 times */
+       0x12, 0xFF, 0x00, 0x00, 0x32, 0x11 /* Plain Data */
+       0xEA, 0x24, 0x55,      /* 0x55 repeated 0x24 times */
+       0xEE, 0x98,            /* Plain Data */
+$011F: 0x41, 0x0D, 0x11  /* Track 1, Sector 13 filled with 0x11 */
+$0122: ...
+</pre>
+
+<a name="Section E.6"></a>
+<table width="100%"><tbody><tr>
+<td align="left">
+<h2>E.6 *.D71 Floppy Disk Image Format</h2>
+</td>
+<td align="right"><img src="Power64%20Documentation%20-%20File%20Formats_files/Floppy525.gif" alt="D71 Icon" width="104" height="32"></td>
+</tr></tbody></table>
+
+<p>
+The *.D71 file format is a 1:1 copy of all sectors as they appear on a 
+1571 floppy disk. On a C1571 formatted disk (and thus also in a *.D71 
+file) each sector consists of 256 Byte. In order to be able to deal with
+ bad sectors the *.D71 format optionally features an additional error 
+byte per sector.
+</p>
+
+<p>
+The 1571 disk drive uses double sided 5.25" disks that contain 35 Tracks
+ per side (making a total of 70 tracks). Tracks at the outside edge of 
+the disk contain more sectors than those near to the disks center (Zone 
+Bit Recording). The number of sectors on each track is:
+</p>
+<pre>      Tracks  1..17 - 21 Sectors
+      Tracks 18..24 - 19 Sectors
+      Tracks 25..30 - 18 Sectors
+      Tracks 31..35 - 17 Sectors
+      Tracks 36..52 - 21 Sectors (corresponding to Tracks  1..17 - second side)
+      Tracks 53..59 - 19 Sectors (corresponding to Tracks 18..24 - second side)
+      Tracks 60..65 - 18 Sectors (corresponding to Tracks 25..30 - second side)
+      Tracks 66..70 - 17 Sectors (corresponding to Tracks 31..35 - second side)</pre>
+
+<p>
+Comparing this to the Layout of a *.D64 disk image as described in 
+Appendix E.4 it is easy to see that a *.D71 disk image simply consists 
+of two *.D64 images glued together.
+</p>
+
+<p>
+The Block Allocation Map (BAM) is stored in Track 18 - Sector 0 and 
+Track 53 - Sector 0. The Directory starts at Track 18 - Sector 1.
+</p>
+
+<p>
+For storage in a *.D71 image the sectors are arranged in the following way:
+</p>
+<pre>  Track  1 - Sector  0: Offset   0 * 256
+  Track  1 - Sector  1: Offset   1 * 256
+                .....
+  Track  1 - Sector 20: Offset  20 * 256
+  Track  2 - Sector  0: Offset  21 * 256
+  Track  2 - Sector  1: Offset  22 * 256
+                .....
+  Track  2 - Sector 20: Offset  41 * 256
+  Track  3 - Sector  0: Offset  42 * 256
+                .....
+  Track 18 - Sector  0: Offset 357 * 256
+  Track 18 - Sector  1: Offset 358 * 256
+                .....
+  Track 35 - Sector  0: Offset 666 * 256
+  Track 35 - Sector  1: Offset 667 * 256
+                .....
+  Track 35 - Sector 16: Offset 682 * 256
+                .....
+  Track 36 - Sector  0: Offset 683 * 256
+  Track 36 - Sector  1: Offset 684 * 256
+                .....
+  Track 36 - Sector 20: Offset 703 * 256
+                .....
+  Track 70 - Sector  0: Offset 1349 * 256
+  Track 70 - Sector  1: Offset 1350 * 256
+                .....
+  Track 70 - Sector 16: Offset 1365 * 256
+</pre>
+
+<p>
+Note that tracks are counted starting with track 1, while sector numbers start with 0.
+</p>
+
+<a name="Section E.7"></a>
+<table width="100%"><tbody><tr>
+<td align="left">
+<h2>E.7 *.D81 Floppy Disk Image Format</h2>
+</td>
+<td align="right"><img src="Power64%20Documentation%20-%20File%20Formats_files/Floppy35.gif" alt="D81 Icon" width="104" height="32"></td>
+</tr></tbody></table>
+
+<p>
+The *.D81 file format is a 1:1 copy of all sectors as they appear on a 
+1581 floppy disk. On a C1581 formatted disk (and thus also in a *.D81 
+file) each sector consists of 256 Byte. In order to be able to deal with
+ bad sectors the *.D81 format optionally features an additional error 
+byte per sector.
+</p>
+
+<p>
+The 1581 disk drive uses double sided 3.5" disks that contain 40 Tracks 
+per side (making a total of 80 tracks). All even numbered tracks are 
+located on one side of the disk, all odd numbered tracks on the other. 
+Thus track 40 is located in the middle of the disk. Each track contains 
+40 sectors; Thus a complete 1581 disk image contains 80*40 = 3200 
+sectors.
+</p>
+
+<p>
+The floppy master block is located at Track 40 - Sector 0. It is 
+followed by the Block Allocation Map (BAM) at Track 40 - Sector 1 and 
+Sector 2 and the Directory starts at Track 40 - Sector 3.
+</p>
+
+<p>
+Since all tracks are the same size the offset of a sector in a *.D81 disk can be computed with a simple formula:<br>
+<tt>Offset = (40 * (Track -1) + Sector) * 256</tt>
+</p>
+
+<p>
+Note that tracks are counted starting with track 1, while sector numbers start with 0.
+</p>
+
+<a name="Section E.8"></a>
+<table width="100%"><tbody><tr>
+<td align="left">
+<h2>E.8 *.Lynx File Format</h2>
+</td>
+<td align="right"><img src="Power64%20Documentation%20-%20File%20Formats_files/Tape.gif" alt="Lynx Icon" width="104" height="32"></td>
+</tr></tbody></table>
+
+<p>
+The Lynx (or LNX or Ultimate Lynx) file format was developed by Will 
+Corley for use on the C64(!). It is designed around blocks of 254 
+Bytes.This corresponds to the 256 Bytes of a 1541 disk sector minus the 2
+ Bytes that contain the next track/sector information and makes it easy 
+to copy files between 1541 disks and Lynx files.<br>
+Unfortunately the Lynx header is written in a format that is somewhat 
+harder to handle than that of a T64 or D64 file, and thus the format has
+ received little attention by emulator  authors.
+</p>
+
+<pre>typedef struct
+ {
+  Byte Directory[DirSectorCnt * 254];
+  Byte Data[DataSectorCnt * 254];
+ } LynxFile;</pre>
+
+<p>
+The Directory starts out with a small BASIC program which, when loaded 
+and run, displays the message "Use LYNX to dissolve this file". The  
+actual message and size of the program can change. Usually, its 94 bytes
+ long, from $0000 to $005D. Note that some emulators depend on the exact
+ size of 94 Bytes and also require that the text 'LYNX' can be found at 
+offset $003C to $003F.
+</p>
+
+<pre>$0000: 0x01, 0x08, 0x5B, 0x08, 0x0A, 0x00, 0x97, 0x35, /* .......5 */
+$0008: 0x33, 0x32, 0x38, 0x30, 0x2C, 0x30, 0x3A, 0x97, /* 3280,0:. */
+$0010: 0x35, 0x33, 0x32, 0x38, 0x31, 0x2C, 0x30, 0x3A, /* 53281,0: */
+$0018: 0x97, 0x36, 0x34, 0x36, 0x2C, 0xC2, 0x28, 0x31, /* .646,.(1 */
+$0020: 0x36, 0x32, 0x29, 0x3A, 0x99, 0x22, 0x93, 0x11, /* 62):.".. */
+$0028: 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x22, /* ......." */
+$0030: 0x3A, 0x99, 0x22, 0x20, 0x20, 0x20, 0x20, 0x20, /* :."      */
+$0038: 0x55, 0x53, 0x45, 0x20, 0x4C, 0x59, 0x4E, 0x58, /* USE LYNX */
+$0040: 0x20, 0x54, 0x4F, 0x20, 0x44, 0x49, 0x53, 0x53, /*  TO DISS */
+$0048: 0x4F, 0x4C, 0x56, 0x45, 0x20, 0x54, 0x48, 0x49, /* OLVE THI */
+$0050: 0x53, 0x20, 0x46, 0x49, 0x4C, 0x45, 0x22, 0x3A, /* S FILE": */
+$0058: 0x89, 0x31, 0x30, 0x00, 0x00, 0x00,             /* .10...   */
+</pre>
+
+<p>
+This is equivalent to the following BASIC program:
+</p>
+<pre>   10 POKE53280,0:POKE53281,0:POKE646,PEEK(162):
+        PRINT"&lt;CLS&gt;&lt;DOWN&gt;&lt;DOWN&gt;&lt;DOWN&gt;&lt;DOWN&gt;&lt;DOWN&gt;&lt;DOWN&gt;&lt;DOWN&gt;&lt;DOWN&gt;":
+        PRINT"     USE LYNX TO DISSOLVE THIS FILE":
+        GOTO10</pre>
+
+<p>
+Following this is a &lt;CR&gt; and the number of blocks of the directory
+ in ASCII with spaces on both sides. For a directory with just 1 block 
+that would be:
+</p>
+
+<pre>$005E:  0x0D, 0x20, 0x31, 0x20, 0x20                    /* . 1     */</pre>
+
+<p>
+After this there is the "signature" of the archive, an CBM lower case 
+(ASCII for the most part) text ending in &lt;CR&gt; that describes the 
+Lynx archive. Normally this signature will contain the string 'LYNX'.<br>
+Power64 uses:
+</p>
+<pre>$0063: 0x2A, 0x4C, 0x59, 0x4E, 0x58, 0x20, 0x41, 0x52, /* *LYNX AR */
+$006B: 0x43, 0x48, 0x49, 0x56, 0x45, 0x20, 0x42, 0x59, /* CHIVE BY */
+$0073: 0x20, 0x50, 0x4F, 0x57, 0x45, 0x52, 0x36, 0x34  /*  POWER64 */
+$007B: 0x0D</pre>
+
+<p>
+This is followed by the number of files in the Lynx archive, as before 
+this is given as a ASCII number surrounded by spaces and delimited by 
+&lt;CR&gt;.<br>
+For a directory with 3 files that would be:
+</p>
+<pre>$007C: 0x20, 0x33, 0x20, 0x0D                          /*  3 .     */</pre>
+
+<p>
+Following these headers is the actual directory. Each file is described 
+by its filename (in PETASCII, often padded to 16 characters by 
+shifted-spaces), followed by the size of the file (plus 2 bytes for the 
+address) in blocks of 254 bytes, the file type (P, S, R, U), the size in
+ bytes of the last block. If the file type is Relative, this entry is 
+the Record size, and the next entry is the last block size. If the file 
+type is not Relative, the next entry will be the next filename. Relative
+ files are not supported by Power64. Every entry is terminated by a 
+&lt;CR&gt;, numbers are surrounded by spaces. For example this could be:
+</p>
+
+<pre>File 1: "Block Out", PRG, 2+2519 Byte (2521 = (10-1) * 254 + 235)
+$0080: 0x42, 0x4C, 0x4F, 0x43, 0x4B, 0x20, 0x4F, 0x55, /* BLOCK OU */
+$0088: 0x54, 0xA0, 0xA0, 0xA0, 0xA0, 0xA0, 0xA0, 0xA0, /* T        */
+$0090: 0x0D, 0x20, 0x31, 0x30, 0x20, 0x0D, 0x50, 0x0D, /* . 10 .P. */
+$0098: 0x20, 0x32, 0x33, 0x35, 0x20, 0x0D,             /*  235 .   */
+
+File 2: "Serpentine", PRG, 2+8703 Byte (8705 = (35-1) * 254 + 69)
+$009E: 0x53, 0x45, 0x42, 0x4C, 0x45, 0x4E, 0x54, 0x49, /* SERPENTI */
+$00A6: 0x4E, 0x45, 0xA0, 0xA0, 0xA0, 0xA0, 0xA0, 0xA0, /* NE       */
+$00AE: 0x0D, 0x20, 0x33, 0x35, 0x20, 0x0D, 0x50, 0x0D, /* . 35 .P. */
+$00B6: 0x20, 0x36, 0x39, 0x20, 0x0D,                   /*  69 .    */
+
+File 3: "Quadromania", PRG, 2+7056 Byte (7058 = (28-1) * 254 + 200)
+$00BB: 0x51, 0x55, 0x41, 0x44, 0x52, 0x4F, 0x4D, 0x41, /* QUADROMA */
+$00C3: 0x4E, 0x49, 0x41, 0xA0, 0xA0, 0xA0, 0xA0, 0xA0, /* NIA      */
+$00CB: 0x0D, 0x20, 0x32, 0x38, 0x20, 0x0D, 0x50, 0x0D, /* . 28 .P. */
+$00D3: 0x20, 0x32, 0x30, 0x30, 0x20, 0x0D,             /*  200 .   */
+</pre>
+
+<p>
+The actual files follow the directory. Each file consists of 2 bytes load address plus the actual data.
+</p>
+
+<p>
+Note that the directory and every files size is a multiple of 254 bytes.
+ If the actual information requires less space, then there is a wasted 
+gap, that is filled with 0x00 in Power64 (other implementations vary).
+</p>
+
+<p>
+In the above example the directory consists of just one block, and thus 
+Block Out starts at offset 1 * 254. The second file (Serpentine) starts 
+at offset (1+10) * 254 and Quadromania begins at (1+10+35) * 254.
+</p>
+
+<pre>$00FE: 0x01, 0x08, 0x26, 0x08, 0xC1, 0x07, 0x9E, 0x32, /* ..&amp;.i..2 */
+$0106: 0x30, 0x38, 0x38, 0x3A, 0x12, 0x42, 0x4C, 0x4F, /* 088:.BLO */
+$011E: 0x43, 0x4B, 0xAB, 0x4F, 0x55, 0x54, ...         /* CK-OUT.. */
+... /* (1+10) * 254 = $0AEA */
+$0AEA: 0x01, 0x08, 0x26, 0x08, 0xC1, 0x07, 0x9E, 0x32, /* ..&amp;.¡..2 */
+$0AF2: 0x30, 0x38, 0x38, 0x3A, 0x12, 0x53, 0x45, 0x52, /* 088:.SER */
+$0AFA: 0x50, 0x45, 0x4E, 0x54, 0x49, 0x4E, 0x45,...    /* PENTINE  */
+...</pre>
+
+<a name="Section E.9"></a>
+<table width="100%"><tbody><tr>
+<td align="left">
+<h2>E.9 *.T64 Tape Image Format</h2>
+</td>
+<td align="right"><img src="Power64%20Documentation%20-%20File%20Formats_files/Tape.gif" alt="T64 Icon" width="104" height="32"></td>
+</tr></tbody></table>
+
+<p>
+The *.T64 file format is a very well designed (so in former times poorly
+ documented) format, developed by Miha Peternel for C64S. Like a disk 
+image file it is able to contain many logical files; a great help when 
+keeping lots of files organized. On the other hand there is very little 
+organizational overhead, both in terms of lost space on the host file 
+system and in terms loading time for the emulator. As a *.T64 file 
+contains a magic header it is furthermore possible for the emulator to 
+prevent invalid files from being used.
+</p>
+
+<pre>typedef struct
+ {
+  TapeHeader Header;          /*  $0000  -  $003F  */
+  TapeEntry  Entry[MaxFiles]; /*  $0040  - ($03FF) */
+  Byte       Data[n];         /* ($0400) -   ...   */
+ } T64File;</pre>
+
+<table>
+<tbody><tr><td valign="top"><tt>Header</tt></td><td>- General 
+information; containing a magic string to identify a *.T64 file, the 
+number of files on the tape etc... (see below for details)</td></tr>
+<tr><td valign="top"><tt>Entry</tt></td> <td>- Tape Directory; A list of
+ all files stored on the tape. The value MaxFiles is defined in Header, 
+but is usually 30. (see below for details)</td></tr>
+<tr><td valign="top"><tt>Data</tt></td>  <td>- The actual data for all the files.</td></tr>
+</tbody></table>
+
+<pre>typedef struct
+ {
+  Byte TapeDescr[32]; /* $00 - $1F */
+  Byte Version[2];    /* $20 - $21 */
+  Byte MaxFiles[2];   /* $22 - $23 */
+  Byte CurrFiles[2];  /* $24 - $25 */
+  Byte Reserved[2];   /* $26 - $27 */
+  Byte UserDescr[24]; /* $28 - $3F */
+ } TapeHeader;</pre>
+
+<table>
+<tbody><tr><td valign="top"><tt>TapeDescr</tt></td><td> - Magic string: "C64 tape image file"; padded with $00<br>
+            Note this magic string need not be verbatim. Search for 
+substrings "C64" and "tape" to identify a *.T64 file. Warning: TAP tape 
+image files (see below) use "C64-TAPE-RAW" for a magic string. This too 
+contains "C64" and "tape"!</td></tr>
+<tr><td valign="top"><tt>Version</tt></td><td>   - Tape Version 1.0 = {$00, $01}</td></tr>
+<tr><td valign="top"><tt>MaxFiles</tt></td><td>  - Number of places in 
+the tape directory. There are some some emulators that rely on fact that
+ there are exactly 30 places in the directory. Thus all *.T64 files 
+created by Power64 will supply this value. = {$1E, $00}</td></tr>
+<tr><td valign="top"><tt>CurrFiles</tt></td><td> - Number of Files 
+currently stored on the tape. This number can never exceed MaxFiles. 
+Note that some emulators can only read the first file stored in a *.T64 
+image.</td></tr>
+<tr><td valign="top"><tt>Reserved</tt></td><td>  - Must be $00.</td></tr>
+<tr><td valign="top"><tt>UsedDescr</tt></td><td> - User Description of the Tape. (CBM character set)</td></tr>
+</tbody></table>
+
+
+<pre>typedef struct
+ {
+  Byte EntryUsed;     /* $00 */
+  Byte FileType;      /* $01 */
+  Byte StartAddr[2];  /* $02 - $03 */
+  Byte EndAddr[2];    /* $04 - $05 */
+  Byte ReservedA[2];  /* $06 - $07 */
+  Byte TapePos[4];    /* $08 - $0B */
+  Byte ReservedB[4];  /* $0C - $0F */
+  Byte FileName[16];  /* $10 - $1F */
+ } TapeEntry;</pre>
+
+<table>
+<tbody><tr><td valign="top"><tt>EntryUsed</tt></td><td> - Is this entry in the *.T64 directory used? (0..No, 1..Yes)</td></tr>
+<tr><td valign="top"><tt>FileType</tt></td><td>  - There is very little documentation on this field.<br>
+            Power64 adopts the notion of Star Commander that corresponds to the file type identifiers used on floppy disk:<br>
+            $82..Relocatable Prg, $81..Data File<br>
+            Earlier versions of Power64 implemented the following meaning:<br>
+            0..Relocatable Prg., 1..Force Load Prg., 2..Data File<br>
+            To prevent error messages all other values are also treated a relocatable programs.</td></tr>
+<tr><td valign="top"><tt>StartAddr</tt></td><td> - Start of the destination range in C64 memory. (Low/High)</td></tr>
+<tr><td valign="top"><tt>EndAddr</tt></td><td>   - End of the destination range in C64 memory. (Low/High)</td></tr>
+<tr><td valign="top"><tt>ReservedA</tt></td><td>- Must be $00</td></tr>
+<tr><td valign="top"><tt>TapePos</tt></td><td>   - Offset from the start of the tape file to the logical files data</td></tr>
+<tr><td valign="top"><tt>ReservedB</tt></td><td> - Must be $00</td></tr>
+<tr><td valign="top"><tt>FileName</tt></td><td>  - filename (CBM character set)</td></tr>
+</tbody></table>
+
+<p>
+There was very little official documentation on the *.T64 file format. 
+What is known was generally learned by examining existing *.T64 files. 
+Sometimes that was not done with sufficient scrutiny. Thus there are 
+many *.T64 files on the internet that do not follow the described 
+format. It is, for example quite common, that the difference between 
+EndAddr and StartAddr of a file is not consistent with the file size of 
+the *.T64 file. Power64 attempts to automatically fix such 
+inconsistencies.
+</p>
+
+<p>
+As stated above there are some emulators that rely on the fact that 
+there are always exactly 30 directory entries, while at the same time 
+they will always load the first file. Please keep this in mind when 
+making Commodore 64 files available to a general public that might use a
+ wide range of emulators.
+</p>
+
+<p>
+All multi-byte values are stored in the Little-Endian Format (Low/High) that is generally used by the C64.
+</p>
+
+<a name="Section E.10"></a>
+<table width="100%"><tbody><tr>
+<td align="left">
+<h2>E.10 *.TAP (*.RAW) Tape Image Format</h2>
+</td>
+<td align="right"><img src="Power64%20Documentation%20-%20File%20Formats_files/Tape.gif" alt="TAP Icon" width="104" height="32"></td>
+</tr></tbody></table>
+
+<p>
+The *.TAP (or *.RAW) tape image format, offers a very precise image of a
+ C64 data tape. Due to the high level of precision and detail most of 
+the tricks that were possible with the C64 tape drive can be emulated. 
+Even fastloaders offer no problem. The drawbacks of the *.TAP format are
+ their huge memory footprint (at least 8 times, usually 10-12 times, at 
+worst up to 45 times the file size of a T64 image containing the same 
+data) and the long, slow loading process (using the original C64 ROM 
+routines about 110 bytes/second can be loaded at peak rate, but due to 
+redundancy for error correction the net throughput is only 50 
+bytes/second; using special fastloaders about 200-500 bytes/second can 
+be achieved).
+</p>
+
+<p>
+The information on a C64 tape is encoded in single pulses. The time 
+delay between two sucessive pulses carries the actual information. 
+Exactly these delays are stored in a *.TAP file.
+</p>
+
+<pre>typedef struct
+ {
+  Byte TAPMagic[12];    /* $00 - $0B */
+  Byte Version;         /* $0C */
+  Byte Reserved[3];     /* $0D - $0F */
+  Byte Size[4];         /* $10 - $13 */
+  Byte Data[Size];      /* $14 - ... */
+ } TAPFile;</pre>
+
+<table>
+<tbody><tr><td valign="top"><tt>TAPMagic</tt></td> <td>- Magic Constant "C64-TAPE-RAW" = {$43, $36, $34, $2D, $54, $41, $50, $45, $2D, $52, $41, $57}</td></tr>
+<tr><td valign="top"><tt>Version</tt></td>  <td>- $00 or $01: see Data</td></tr>
+<tr><td valign="top"><tt>Reserved</tt></td> <td>- Always $00</td></tr>
+<tr><td valign="top"><tt>Size</tt></td>     <td>- Size of the *.TAP file in Little-Endian format, excluding the header.</td></tr>
+<tr><td valign="top"><tt>Data</tt></td>     <td>- The time delay between two sucessive pulses on the tape.<br>
+     Values $01-$FF directly represent the timespan between two pulses, 
+measured in multiples of 8 CPU cycles. (i.e. a value of $2E means that 
+there are 8*$2E = $170 CPU Cycles between two pulses).<br>
+     The Value $00 has a special meaning. In version $00 of the TAP 
+format, a value of $00 simply means any time longer that 8*$FF CPU 
+cycles. In Version $01 the three bytes following the $00 give (in 
+Little-Endian format) the number of CPU Cycles (without a multiplyer of 
+8) that will pass by before the next pulse comes along.</td></tr>
+</tbody></table>
+
+<p>
+The original C64 ROM routines use a rather inefficient, but fairly well 
+error correcting algorithm to encode data. Each byte of user data is 
+written using a start bit, 8 user bits (LSB first, MSB last) and a 
+parity bit (making the number of '1' bits odd). The start bit consists 
+of a very long interval followed by a long interval. '0' bits are 
+encoded by a short interval followed by a long interval and '1' bits are
+ encoded by a long interval followed by a short interval. Short 
+Intervals are about 0x164 (= 0x2C*8) CPU cycles long. Long intervals 
+last about 0x1FC (= 0x3F*8) cycles, and very long intervals are about 
+0x2AC (= 0x55*8) cycles long. The actual timing values can vary 
+significantly and rapidly, since the tape drive was never optimised for 
+even tape movement. The ROM routines attempt to compensate for this by 
+permanently adjusting a tape speed parameter. A very long interval 
+followed by a short interval indicates the end of a block of data.<br>
+Efficiency estimate: For one byte of user data the tape requires (0x2AC +
+ 0x1FC) +  9*(0x1FC+0x164) = 0x2308 = 8968 CPU Cycles, giving a 
+performance of about 110 byte/seconds. Since every block is stored twice
+ to allow for error correction and there are unused gaps between the 
+copies only half of that performance (about 50 byte/second) is available
+ for actual use.<br>
+On the other hand storing a user byte requires 2+9*2 = 20 intervals each
+ encoded in a byte. To allow for error compensation all data is stored 
+twice, making it a total of 40 byte of TAP file size of each byte of 
+user information. In addition to that more TAP files contain generous 
+gaps between the used areas, increasing file sizes even more.
+</p>
+
+<p>
+Various fastloaders store their data in different, propriatary formats. 
+In general they gain efficiency using just a single interval for each 
+user bit, reducing the size of each interval, dropping startbits and 
+parity and storing the complete data only once. While this drastically 
+reduces the possibility of error detection and correction it does 
+improve loading speeds to 200-500 byte/second. At the same time the size
+ of the TAP file is reduced to about 8 times the size of the user data 
+contained.
+</p>
+
+<p>
+The Commodore 64 Tape Info Central available at <a href="http://www.geocities.com/SiliconValley/Platform/8224/c64tape/index.html"> http://www.geocities.com/SiliconValley/Platform/8224/c64tape/index.html</a> provides detailed information on lots of tape formats.
+</p>
+
+<p>
+If you are interested in transfering data from physical tapes to your 
+Mac, you should read the Commodore 64 Tape Transfer FAQ available at: <a href="http://www.geocities.com/SiliconValley/Platform/8224/c64tape/faq.html">http://www.geocities.com/SiliconValley/Platform/8224/c64tape/faq.html</a>.
+ You will also find links too (DOS/Windows-, unfortunatly not Mac-) 
+tools that will convert WAV-files to TAPs or T64 tape images.
+</p>
+
+<a name="Section E.11"></a>
+<table width="100%"><tbody><tr>
+<td align="left">
+<h2>E.11 *.CRT ROM Modul Format</h2>
+</td>
+<td align="right"><img src="Power64%20Documentation%20-%20File%20Formats_files/Cartridge.gif" alt="Cartridge Icon" width="104" height="32"></td>
+</tr></tbody></table>
+
+<p>
+The *.CRT ROM Cartridge Format is quite flexible and makes it possible 
+to encode a wide variety of different types of cartridges efficiently. 
+Furthermore it is easy to read, has an easily recognizable Magic String 
+and requires only little administrative overhead.
+</p>
+
+<p>
+Basically a CRT file consists of a Cartridge Header, describing to 
+cartridge in general, followed by one or more chip packets that each 
+describe the contents of one ROM chip.
+</p>
+
+<p>
+All Multibyte-Values are stored in Big-Endian Format.
+</p>
+
+<pre>typedef struct
+ {
+  Byte CartrigeMagic[16];  /* $00 - $0F */
+  Long HeaderSize;         /* $10 - $13 */
+  Word Version;            /* $14 - $15 */
+  Word HardwareType;       /* $16 - $17 */
+  Byte ExROM_Line          /* $18 */
+  Byte Game_Line           /* $19 */
+  Byte Unused[6];          /* $1A - $1F */
+  Byte CartridgeName[32];  /* $20 - $3F */
+ } CartridgeHeader;</pre>
+
+<table>
+<tbody><tr><td valign="top"><tt>CartridgeMagic</tt></td><td>- Magic Constant <tt>'C64 CARTRIDGE   ' = <br>
+                     {$43, $36, $34, $20, $43, $41, $52, $54,<br>
+                      $52, $49, $44, $47, $45, $20, $20, $20}</tt></td></tr>
+<tr><td valign="top"><tt>HeaderSize</tt></td><td>- sizeof(<tt>CartridgeHeader</tt>) = 64 = <tt>{$00, $00, $00, $40}</tt></td></tr>
+<tr><td valign="top"><tt>Version</tt></td><td>- CRT Version 1.0 = <tt>{$01, $00}</tt></td></tr>
+<tr><td valign="top"><tt>HardwareType</tt></td><td>- There is a wide 
+variety of different cartridge types that are all summarized under the 
+CRT format. All cartridges contain some ROM (as planned by the designers
+ of the C64), but in addition to that some cartridges also contain RAM 
+and/or logic circuits. Usually these designs were used for just a single
+ project each, so that the effort for their emulation is hardly worth 
+the trouble. Power64 supports cartridge types 0, 4, 6, 7, 8, 11 and 12 
+covering the entire range of games.<br>
+<tt>              0 - Normal cartridge<br>
+              1 - Action Replay<br>
+              2 - KCS Power Cartridge<br>
+              3 - Final Cartridge III<br>
+              4 - Simons Basic<br>
+              5 - Ocean type 1 (256 and 128 KByte)<br>
+              6 - Expert Cartridge<br>
+              7 - Fun Play<br>
+              8 - Super Games<br>
+              9 - Atomic Power<br>
+             10 - Epyx Fastload<br>
+             11 - Westermann<br>
+             12 - Rex<br>
+             13 - Final Cartridge I<br>
+             14 - Magic Formel</tt></td></tr>
+<tr><td valign="top"><tt>ExROM_Line</tt></td><td>- Signal of the ExROM Line (for Memory configuration)</td></tr>
+<tr><td valign="top"><tt>Game_Line</tt></td><td>- Signal of the Game Line (for Memory configuration)</td></tr>
+<tr><td valign="top"><tt>CartridgeName</tt></td><td>- Human-Readable Name of the Cartridge (Null-terminated String)</td></tr>
+</tbody></table>
+
+<pre>typedef struct {
+  Byte ChipMagic[4];  /* 0x00 - 0x03 */
+  Long PacketLength;  /* 0x04 - 0x07 */
+  Word ChipType;      /* 0x08 - 0x09 */
+  Word Bank;          /* 0x0A - 0x0B */
+  Word Address;       /* 0x0C - 0x0D */
+  Word Length;        /* 0x0E - 0x0F */
+  Byte Data[Length];  /* 0x10 - ...  */
+ } ChipPacket;
+</pre>
+
+<table>
+<tbody><tr><td valign="top"><tt>ChipMagic</tt></td><td>- Magic Constant 'CHIP' = {$43, $48, $49, $50}</td></tr>
+<tr><td valign="top"><tt>PacketLength</tt></td><td>- Size of the ChipPacket (= Length + 0x10)</td></tr>
+<tr><td valign="top"><tt>ChipType</tt></td><td>- 0..ROM, 1..RAM (No Data Field), 2..EEPROM</td></tr>
+<tr><td valign="top"><tt>Bank</tt></td><td>- for Multi-Bank Cartridges (for single bank cartridges: 0)</td></tr>
+<tr><td valign="top"><tt>Address</tt></td><td>- 'Load'-Address of the ROM chip (usually $8000 or $A000)</td></tr>
+<tr><td valign="top"><tt>Length</tt></td><td>- Size of the ROM chip (usually $1000 or $2000 or $4000)</td></tr>
+<tr><td valign="top"><tt>Data</tt></td><td>- Contents of the ROM</td><td>
+</td></tr></tbody></table>
+
+<p>
+Example: Simons Basic Cartridge
+</p>
+<pre>$0000: 0x43, 0x36, 0x34, 0x20, 0x43, 0x41, 0x52, 0x54, /* C64 CART */
+$0008: 0x52, 0x49, 0x44, 0x47, 0x45, 0x20, 0x20, 0x20, /* RIDGE    */
+$0010: 0x00, 0x00, 0x00, 0x40, 0x01, 0x00, 0x00, 0x04, /* ...@.... */
+$0018: 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* ........ */
+$0020: 0x53, 0x69, 0x6D, 0x6F, 0x6E, 0x27, 0x73, 0x20, /* Simon's  */
+$0028: 0x42, 0x61, 0x73, 0x69, 0x63, 0x00, 0x00, 0x04, /* Basic... */
+$0030: 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* ........ */
+$0038: 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* ........ */
+
+$0040: 0x43, 0x48, 0x49, 0x50, 0x00, 0x00, 0x20, 0x10, /* CHIP.. . */
+$0048: 0x00, 0x00, 0x00, 0x00, 0x80, 0x00, 0x20, 0x00  /* ...... . */
+$0050: .... $2000 Byte for Bank 0: $8000 - $9FFF ....
+
+$2050: 0x43, 0x48, 0x49, 0x50, 0x00, 0x00, 0x20, 0x10, /* CHIP.. . */
+$2058: 0x00, 0x00, 0x00, 0x00, 0xA0, 0x00, 0x20, 0x00  /* ...... . */
+$2060: .... $2000 Byte for Bank 0: $A000 - $BFFF ....
+
+$4060: End of File</pre>
+
+<a name="Section E.12"></a>
+<table width="100%"><tbody><tr>
+<td align="left">
+<h2>E.12 RAM Snapshot File</h2>
+</td>
+<td align="right"><img src="Power64%20Documentation%20-%20File%20Formats_files/RAM-Snapshot.gif" alt="RAM Snapshot Icon" width="32" height="32"></td>
+</tr></tbody></table>
+
+<p>
+The format for RAM Snapshots was adapted from a suggestion made by Jouko
+ Valta for the Vice-Emulator on Unix systems. The original description, 
+that explains the meaning of the individual header fields in more 
+detail, can be found at: <tt>http://stekt.oulu.fi:/~jopi/x64/RAM-format</tt>
+</p>
+
+<pre>typedef struct
+ {
+  Byte MagicCode[6];     /* $00 - $05 */
+  Byte ReservedA[2];     /* $06 - $07 */
+  Byte Version[2];       /* $08 - $09 */
+  Byte EmulatorID;       /* $0A */
+  Byte SnapType;         /* $0B */
+  Byte RAMStart[2];      /* $0C - $0D */
+  Byte RAMSizeKB[2];     /* $0E - $0F */
+  Byte REUSizeKB[2];     /* $10 - $11 */
+  Byte ReservedB[14];    /* $12 - $1F */
+  Byte Config[6];        /* $20 - $25 */
+  Byte IORAM;            /* $26 */
+  Byte CPURestore;       /* $27 */
+  Byte PCHigh, PCLow;    /* $28 - $29 */
+  Byte RegA, RegX, RegY; /* $2A - 2C */
+  Byte RegFlags, RegSP;  /* $2D - $2E */
+  Byte IOPort;           /* $2F */
+  Byte Z80_CPU[16];      /* $30 - $3F */
+  Byte REC[16];          /* $40 - $4F */
+  Byte OSVersion;        /* $50 */
+  Byte OSPatch;          /* $51 */
+  Byte PatchID[2];       /* $52 - $53 */
+  Byte ReservedC[44];    /* $54 - $7F */
+  Byte Custom[128];      /* $80 - $FF */
+  Byte RAM[65536];
+  Byte IOArea[4096];
+  Byte REU[REUSize];
+  FloppyState Floppy1541[FloppyCnt];
+ } Snapshot;</pre>
+
+<p>
+Note: All multi-byte values are stored in Big-Endian Format (High/Low) 
+rather than in the Little-Endian Format (Low/High) used by the C64.
+</p>
+
+<table>
+<tbody><tr><td valign="top"><tt>MagicCode</tt></td> <td>- Magic Constant 'CBM'64 = <tt>{$43, $42, $4D, $64, $00, $00}</tt></td></tr>
+<tr><td valign="top"><tt>ReservedA</tt></td> <td>- Should be <tt>{$00, $00}</tt></td></tr>
+<tr><td valign="top"><tt>Version</tt></td>   <td>- Major and Minor Version Number 1.0 = <tt>{$01, $00}</tt></td></tr>
+<tr><td valign="top"><tt>EmulatorID</tt></td><td>- Power64 uses '/' = $2F</td></tr>
+<tr><td valign="top"><tt>SnapType</tt></td>  <td>- RAM Snapshot = $00</td></tr>
+<tr><td valign="top"><tt>RAMStart</tt></td>  <td>- Offset to the RAM Image in the File. The header currently uses 256 Bytes. Thus RAMStart = <tt>{$01, $00}</tt>.</td></tr>
+<tr><td valign="top"><tt>RAMSizeKB</tt></td> <td>- Size of the RAM Image in KByte (not Byte!) = <tt>{$00, $40}</tt></td></tr>
+<tr><td valign="top"><tt>REUSizeKB</tt></td> <td>- Size of the RAM Expansion Unit in KByte</td></tr>
+<tr><td valign="top"><tt>ReservedB</tt></td> <td>- Should be all $00</td></tr>
+<tr><td valign="top"><tt>Config</tt></td>    <td>- Reserved for configuration bit masks - Currently all $00</td></tr>
+<tr><td valign="top"><tt>IORAM</tt></td>     <td>- Bit 2/1: VDC RAM available (00..No,   01..16KB, 10..64KB, 11..32KB)<br>
+                      Bit 0:   I/O data available (0..No, 1..Yes)<br>
+                      Value used by Power64: $01</td></tr>
+<tr><td valign="top"><tt>CPURestore</tt></td><td>- CPU(s) available: (Bit 0: M6502, Bit 1: Z80, Bit 2: REC) = $01</td></tr>
+<tr><td valign="top"><tt>PCHigh, PCLow</tt></td><td>- M6502 Program Counter</td></tr>
+<tr><td valign="top"><tt>RegA, RegX, RegY, RegFlags, RegSP</tt></td> <td>- M6502 Registers</td></tr>
+<tr><td valign="top"><tt>IOPort</tt></td>    <td>- 6502 CPU I/O latch</td></tr>
+<tr><td valign="top"><tt>Z80_CPU</tt></td>   <td>- Reserved for internal state of Z80 (not used)</td></tr>
+<tr><td valign="top"><tt>REC</tt></td>       <td>- Reserved for internal state of REC (not used)</td></tr>
+<tr><td valign="top"><tt>OSVersion</tt></td> <td>- C64 Kernal ID byte (not used)</td></tr>
+<tr><td valign="top"><tt>OSPatch</tt></td>   <td>- Kernal patch ID for extensions (fastloaders etc.) (not used)</td></tr>
+<tr><td valign="top"><tt>PatchID</tt></td>   <td>- Patch version information  (not used)</td></tr>
+<tr><td valign="top"><tt>ReservedC</tt></td> <td>- Kernal version information (not used)</td></tr>
+<tr><td valign="top"><tt>Custom</tt></td>    <td>- Information on peripherals, external devices etc. (not used)</td></tr>
+<tr><td valign="top"><tt>RAM</tt></td>       <td>- Contents of the RAM</td></tr>
+<tr><td valign="top"><tt>IOArea</tt></td>    <td>- Contents of the I/O-Area (VIC, SID, ColorRAM, CIA1/2, REU)<br>
+             Every device is stored only once, even so several shadows 
+appear in the C64 address space. The gaps are filled with Power64 
+internal state information and lots of $00.</td></tr>
+<tr><td valign="top"><tt>REU</tt></td>       <td>- The Contents of the REU RAM, if a RAM Expansion is present.<br>
+                      0, 128, 256 or 512 KByte - as specified by REUSizeKB.</td></tr>
+<tr><td valign="top"><tt>Floppy1541</tt></td><td>- The current state of each attached, completely emulated Floppy 1541.
+<pre>typedef struct
+ {
+  Byte MagicCode[6];     /* $00 - $05 ('CBM',$15, $41, $00) */
+  Byte ReservedA[2];     /* $06 - $07 */
+  Byte Version[2];       /* $08 - $09 */
+  Byte EmulatorID;       /* $0A */
+  Byte SnapType;         /* $0B */
+  Byte RAMStart[2];      /* $0C - $0D */
+  Byte RAMSizeKB[2];     /* $0E - $0F */
+  Byte REUSizeKB[2];     /* $10 - $11 */
+  Byte ReservedB[14];    /* $12 - $1F */
+  Byte Config[6];        /* $20 - $25 */
+  Byte IORAM;            /* $26 */
+  Byte CPURestore;       /* $27 */
+  Byte PCHigh, PCLow;    /* $28 - $29 */
+  Byte RegA, RegX, RegY; /* $2A - 2C */
+  Byte RegFlags, RegSP;  /* $2D - $2E */
+  Byte ReservedC[81];    /* $2F - $7F */
+  Byte Custom[128];      /* $80 - $FF */
+  Byte RAM[2048];
+  Byte IOArea[512];
+ } FloppyState;</pre>
+</td></tr>
+</tbody></table>
+
+<a name="Section E.13"></a>
+<table width="100%"><tbody><tr>
+<td align="left">
+<h2>E.13 Commodore64 Audio File (reSID Sound File)</h2>
+</td>
+<td align="right"><img src="Power64%20Documentation%20-%20File%20Formats_files/Sound.gif" alt="Sound Icon" width="68" height="32"></td>
+</tr></tbody></table>
+
+<p>
+The Commodore64 Audio File Format was developed by Roland Lieger for 
+Power64 and reSID. It is based on a idea used by Richard Bannister for 
+Frodo, but has been improved for flexibility and compactness of 
+resulting files.
+</p>
+
+<p>
+Note: All multi-byte values are stored in Big-Endian Format (High/Low) 
+rather than in the Little-Endian Format (Low/High) used by the C64.
+</p>
+
+<pre>typedef struct
+ {
+  Byte MagicString[24];    /* $00 - $17 */
+                           /* -&gt; "Commodore64 Audio File\n\0" */
+  Word Version;            /* $18 - $19 */
+  Word HeaderSize;         /* $1A - $1B */
+  Byte EmulatorID;         /* $1C */
+  Byte Reserved;           /* $1D */
+  Word EmulatorVersion;    /* $1E - $1F */
+  Word PrivHeaderSize;     /* $20 - $21 */
+ } GlobalHeader;
+</pre>
+
+<pre>typedef struct
+ {
+  Long SystemClockSpeed;   /* $22 - $26 */
+  Word ClockGrain;         /* $27 - $28 */
+ } SystemHeader;
+</pre>
+
+<pre>typedef struct
+ {
+  GlobalHeader GlobalHdr;
+  SystemHeader SystemHdr;
+  Byte         PrivateHdr[PrivHeaderSize];
+  Byte         InitialSIDState[25];
+  Byte         Reserved[7];
+  Byte         SIDCommands[...];
+  Byte         EOFMarker[3];
+ } C64_Audio_File;
+</pre>
+
+<table>
+<tbody><tr><td valign="top"><tt>MagicString</tt></td><td>- "Commodore64 Audio File\n\0"</td></tr>
+<tr><td valign="top"><tt>Version</tt></td>    <td>- Major and Minor Version Number 1.0 = <tt>{$01, $00}</tt></td></tr>
+<tr><td valign="top"><tt>HeaderSize</tt></td> <td>- Size of SystemHeader (currently 6 Byte = <tt>{$00, $06}</tt>, additional fields may be added in future versions)</td></tr>
+<tr><td valign="top"><tt>EmulatorID</tt></td> <td>- Power64 uses '/' = $2F</td></tr>
+<tr><td valign="top"><tt>EmulatorVersion</tt></td><td>- Major and Minor Version Number of the creating Emulator.</td></tr>
+<tr><td valign="top"><tt>PrivHeaderSize</tt></td> <td>- Size of private data stored by the emulator.</td></tr>
+</tbody></table>
+
+<table>
+<tbody><tr><td valign="top"><tt>SystemClockSpeed</tt></td><td>- Speed of the system clock. 982800Hz for PAL, 1021800Hz for NTSC</td></tr>
+<tr><td valign="top"><tt>ClockGrain</tt></td><td>- Granularity of the 
+SID recording timer measured in system clock ticks. Usually one scanline
+ (63 ticks for PAL, 65 ticks for NTSC) - This gives sufficiently good 
+accuracy while keeping file sizes small. Do not use a granularity of 1 
+tick just because you think it is closer to the original. You will not 
+notice an audible difference!</td></tr>
+</tbody></table>
+
+<table>
+<tbody><tr><td valign="top"><tt>InitialSIDState</tt></td><td>- Contents of the 25 writable SID registers at the start of the recording.</td></tr>
+<tr><td valign="top"><tt>SIDCommands</tt></td><td>-
+This is a sequence of 2 and 3 Byte commands. Each command consists of a 
+delay (measured in clock grains) and usually a write operation to a SID 
+register.<br>
+The first byte of a command indicates the duration of the Delay (Bits 
+7..5) and the choice of SID_Register to write to (Bits 4..0).<br>
+If the value of Delay is in the range 0..5, then this is the number of clock grains that the SID produces sound without change.<br>
+It Delay equals 6, then the next Byte contains an ExtDelay value, and there is a delay of 6+ExtDelay clock grains.<br>
+It Delay equals 7, then the next Byte contains an ExtDelay value, and 
+there is a delay of 6+256+ExtDelay clock grains. ExtDelay must be less 
+or equal 254 making the maximal delay equal to 516 clock grains (almost 2
+ complete NTSC frames if one clock grain is chosen to be equal to one 
+scanline). The ExtDelay value of 255 is reserved as a End-of-File 
+marker.<br>
+If SID_Register is in the range 0x00..0x18, then the following Byte 
+(possibly after the ExtDelay Byte), indicates the value to write to the 
+SID register.<br>
+The SID_Register values of 0x19..0x1E are reserved and should not be used.<br>
+The SID_Register value 0x1F indicates that no write to a SID register is
+ done. This is necessary if there is a delay of more than 516 clock 
+grains between two SID writes.
+</td></tr>
+<tr><td valign="top"><tt>EOFMarker</tt></td><td>- End of File Marker = {<tt>$FF, $FF, $FF}</tt></td></tr>
+</tbody></table>
+
+<a name="EndOfText"></a>
+<table width="100%"><tbody><tr>
+<td width="52" align="left">
+<a href="http://www.infinite-loop.at/">
+<img src="Power64%20Documentation%20-%20File%20Formats_files/ButtonHomeWide.gif" alt="Home" width="44" height="24" border="0"></a>
+</td>
+<td align="center">
+<a href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/00-Titlepage.html">
+     <img src="Power64%20Documentation%20-%20File%20Formats_files/ButtonFirst.gif" alt="First" width="24" height="24" border="0"></a>
+<a href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/AD-Custom_Chips.html">
+     <img src="Power64%20Documentation%20-%20File%20Formats_files/ButtonPrev.gif" alt="Prev" width="24" height="24" border="0"></a>
+<a href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/00-Contents.html">
+     <img src="Power64%20Documentation%20-%20File%20Formats_files/Contents.gif" alt="Contents" width="156" height="24" border="0"></a>
+<a href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/AF-Emulator_Detection.html">
+     <img src="Power64%20Documentation%20-%20File%20Formats_files/ButtonNext.gif" alt="Next" width="24" height="24" border="0"></a>
+<a href="https://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/AF-Emulator_Detection.html">
+     <img src="Power64%20Documentation%20-%20File%20Formats_files/ButtonLast.gif" alt="Last" width="24" height="24" border="0"></a>
+</td>
+<td width="52" align="right">
+<a href="#TopOfPage">
+     <img src="Power64%20Documentation%20-%20File%20Formats_files/ButtonTopWide.gif" alt="Top of Page" width="44" height="24" border="0"></a>
+</td>
+</tr></tbody></table>
+
+<hr>
+
+<a name="EndOfPage"></a>
+<table width="100%">
+<tbody><tr><td>
+Source: http://www.infinite-loop.at/Power64/Documentation/Power64-ReadMe/AE-File_Formats.html<br>
+Power64 Homepage: <a href="http://www.infinite-loop.at/">http://www.infinite-loop.at</a> and
+                  <a href="http://www.salto.at/">http://www.salto.at</a> -
+EMail: 
+<script language="JavaScript" type="text/javascript">
+<!--
+// Just a little string inversion to discourage email collection robots
+var EncodedEMail, Len, Pos;
+EncodedEMail= ">a/<ta.otlas;46#&troppus>\"46rewoP=tcejbus?ta.otlas;46#&troppus:otliam\"=ferh a<";
+Len = EncodedEMail.length;
+for (Pos = 1; Pos <= Len; Pos++)
+  document.write(EncodedEMail.charAt(Len - Pos));
+// -->
+</script><a href="mailto:support@salto.at?subject=Power64">support@salto.at</a>
+<noscript>
+support&lt;at&gt;salto&lt;dot&gt;at
+</noscript>
+<br>
+© Roland Lieger, Goethegasse 39, A-2340 Mödling, Austria - Europe<br>
+Last Changed: Feb. 29, 2008
+</td>
+<td valign="top" align="right">
+<a href="http://validator.w3.org/check/referer">
+     <img src="Power64%20Documentation%20-%20File%20Formats_files/valid-html401.gif" alt="Valid HTML 4.01!" width="88" height="31" border="0" align="right"></a>
+</td></tr>
+</tbody></table>
+
+
+
+
+</body></html>

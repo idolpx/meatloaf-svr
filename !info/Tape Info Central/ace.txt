@@ -1,0 +1,38 @@
+Ace of Aces Loader
+=======================
+  info by Ben Castricum <webmaster@cia.c64.org>
+
+Encoding:
+---------
+
+Uses the same encoding as Standard Turbo Tape.
+
+ Bit 0:  483 T-States
+ Bit 1: 1008 T-States
+
+Data Endianess: MOST Significant bit First
+
+ Lead-In Byte:  $80
+    Sync Byte:  $FF
+
+Still to find out: 100% Correct Timings (Now gathered from TAP files) !
+~~~~~~~~~~~~~~~~~~
+
+Structure:
+----------
+
+  The length of the block is calculated from Start and End address, which is
+written at the start of the block (after the SYNC Byte). After tese 4 bytes
+the Filename is stored in 16 bytes (but only first 10 seem to be used).
+
+ 00 Start Address of data (Low, High byte)
+ 02 End   Address of data (Low, High byte)
+ 04 Filename (16 bytes)
+ 14 Data
+ .. XOR Checksum of all Data
+
+  After the Filename the actual data is found. After the Data the XOR checksum
+byte is written, which is the XOR of all Data (the start and end address and
+the Filename are NOT included in the XOR calculation).
+
+Still to find out: - Nothing :)

@@ -1,0 +1,24 @@
+Activision tape
+---------------
+By Luigi Di Fraia <armaeth@libero.it>
+
+Used in Activision releases ("Ghostbusters", "Hacker", "On Court Tennis" and probably many others).
+
+After CBM files (DATA size: bytes, CRC32: $8E027BD2) there's another CBM Data block containing the loader. It checks for autostarting cartridges (eg. SIMON's BASIC) and disk drives. If any is found, usually load doesn't end successfully.
+
+Turbo blocks:
+
+      Threshold: $0118 (280) microseconds (TAP value: $22)
+      Bit 0 pulse: $1F (very close to threshold)
+      Bit 1 pulse: $31
+      Endianess: MSbF
+
+      Leader: Bit 1 pulses (no less than x256, typically x2048 about) with last one being bit 0
+      Sync byte: $33
+      Header: Load address (low/high bytes)
+              End Address-1 (low/high bytes) (add 1 to this to get end address)
+
+
+      Data
+
+      1 byte: XOR checksum of all data bytes

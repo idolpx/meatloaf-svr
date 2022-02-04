@@ -1,0 +1,30 @@
+Palace loader
+=====================
+  info by Fabrizio Gennari <fabrizio.ge@tiscalinet.it>
+
+Used by Barbarian, Rimrunner, Antiriad...
+
+Encoding:
+---------
+ Threshold: 469 clock cycles
+
+Data Endianess: MOST Significant bit First
+
+Structure:
+----------
+The header for bit synchronization is made by 
+* a 1 bit
+* 15 bytes with value $01
+* an arbitrary sequence of bytes (that is, the loader accepts any sequence of bytes after the first fifteen 1's. In practical cases, there are all 1's)
+* 4 bytes: the sequence $4A $50 $47 $29.
+
+Then follows a series of 256-byte blocks, whose structure is like that:
+* an arbitrary sequence of bytes (typically all $01)
+* 4 bytes: the sequence $4A $50 $47 $10
+* 1 byte: block number (first in the series is 0, then increments by 1)
+* 256 bytes: data 
+* 1 byte: the EOR checksum of the 256 data bytes.
+
+Each block starts immediately after the previous one has finished (no bit resync between blocks) and are stored in memory one after the other (first byte of a block is stored just after last byte of previous block).
+
+Before calling the loading routine, the caller fills locations $80 and $81 with the memory location (low byte, high byte) where to put the first byte of the first block, and location $101 with the total number of blocks in the series. After the series of blocks is loaded, a new bit resync is needed.

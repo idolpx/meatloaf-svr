@@ -1,0 +1,36 @@
+180 Loader
+===============
+  info by Ben Castricum <webmaster@cia.c64.org>
+
+Encoding:
+---------
+
+Uses the same encoding as Standard Turbo Tape.
+
+ Bit 0: 511 T-States
+ Bit 1: 923 T-States
+
+Data Endianess: MOST Significant bit First
+
+ Lead-In Byte:  $40
+    Sync Byte:  $5A
+
+Still to find out: 100% Correct Timings (Now gathered from TAP files) !
+~~~~~~~~~~~~~~~~~~
+
+Structure:
+----------
+
+  The length of the block is calculated from Start and End address, which is
+written at the start of the block (after the SYNC Byte):
+
+ 00 Start Address of data (Low, High byte)
+ 02 End   Address of data (Low, High byte)
+ 04 Data
+ .. XOR Checksum of Data
+
+  After the start and end address the actual data is found. After the Data the
+XOR checksum byte is written, which is the XOR of all Data (the start and end
+address are NOT included in the XOR calculation).
+
+Still to find out: - Nothing :)

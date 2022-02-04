@@ -1,0 +1,23 @@
+Zzap! Megatape Loader
+=====================
+  info by Fabrizio Gennari <fabrizio.ge@tiscalinet.it>
+
+This loader is used by most (not all) games in Zzap! megatapes.
+
+Encoding:
+---------
+
+Threshold: 416 clock cycles
+
+Data endianness: least significant bit first.
+
+Lead-in byte: $80
+   Sync byte: $AA
+
+Structure:
+----------
+
+The pilot tone is made up of short impulses. Then lead-in byte, sync byte and
+data bytes follow. No checksums are present. The start address is always 2049
+($0801). The end address is stored in the loader's header chunk: low byte is
+stored at location 855 ($0357) and high byte is stored at location 859 ($038B).

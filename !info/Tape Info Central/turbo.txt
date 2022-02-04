@@ -1,0 +1,122 @@
+Standard Turbo Tape
+========================
+  info by Sami Silaste <sami@semaphore.demon.co.uk>
+          Andreas Matthies <andreas.matthies@arcormail.de>
+
+Encoding:
+---------
+
+Uses another standard way of encoding... Pilot tone is basically Data Byte
+repeated many times ... to signal the end of pilot tone a different Byte is
+encountered.
+
+ Threshold: 263 clock cycles
+ Bit 0    : 215 clock cycles (382 T-States)
+ Bit 1    : 325 clock cycles (577 T-States)
+
+Data Endianess: MOST Significant bit First
+
+ Lead-In Byte:  $02
+    Sync Byte:  $09
+
+Structure:
+----------
+
+  Standard Turbo Tape stuff consists of two blocks. The first is the Header
+Block which is *normally* 32 bytes long (some sources tell me that it can be
+up to 188 bytes, but only first 21 are read) and it contains the length of the
+second, Data, block.
+  So far I haven't found any information on how to find out the length of the
+second (data) block without having to read the Header block first... so to
+correctly decode the block you will first have to read the first (header) block.
+
+  There is a number of lead-in bytes before each block (it varies, but it is
+always around 490 or similar, some Turbo Tape savers use more and some less, it
+is not important and the number should be read from the tape itself).
+
+  Both Header and Data block have the following sequence in first 8 bytes
+(after the Sync byte which is $09) :
+
+$08 $07 $06 $05 $04 $03 $02 $01
+
+  Then the ID byte is sent which is :
+
+    $00 for DATA block
+    $01 for Header block, BASIC Type
+    $02 for Header block, MACHINE CODE Type
+
+  For Header blocks the following data is sent after the ID :
+
+    00 Start Address of data (Low, High byte)
+    02 End   Address of data (Low, High byte)
+    04 ??? (whatever $00B0 contained at the time of saving)
+    05 Program Name (16 bytes)
+
+  After this there MIGHT be more bytes, which are filled with value $20. Some
+Save routines save upto 188 bytes long header (the space after Program Name is
+always filled with $20). It seems to be OK to only save first 32 bytes though.
+
+  For DATA block there is data (length is in the Header) immediately after the
+ID byte.
+  After the Data there is XOR checksum Byte, which is XOR of Data only (no ID or
+anything else)...  Note: Header does not have this XOR value (thats why you
+sometimes get those weird FOUND: A^#F#%#$  names when loading from tape ;) )!
+
+The exact timing
+----------------
+
+Having a look at the code in turbotape that writes the bits on the tape we can
+get information about the
+exact timing of turbotape-coded files. Here is the code with number of cycles
+for each instruction:
+
+a. Subroutine for writing the pulse
+
+  Instruction             Cycles
+                               
+  .C:ffed $CA DEX         2    
+  .C:ffee $D0 BNE $FFED   3/2  
+  .C:fff0 $90 BCC $FFF7   3/2  
+  .C:fff2 $A2 LDX #$0B    2    
+  .C:fff4 $CA DEX         2    
+  .C:fff5 $D0 BNE $FFF4   3/2  
+  .C:fff7 $85 STA $01     3    
+  .C:fff9 $60 RTS         6    
+                           
+Counting the cycles you may see that it takes 5X+66 for C=1 and 5X+11 for C=0
+
+b. Loop over the bits of one byte
+
+  Instructions            Cycles
+                               
+  .C:dc90 $A9 LDA #$08    2*    
+  .C:dc92 $85 STA $A3     3*    
+  .C:dc94 $06 ASL $BD     5     
+  .C:dc96 $A5 LDA $01     3     
+  .C:dc98 $29 AND #$F7    2     
+  .C:dc9a $20 JSR $FFED   6     
+  .C:dc9d $A2 LDX #$11    2     
+  .C:dc9f $EA NOP         2     
+  .C:dca0 $09 ORA #$08    2     
+  .C:dca2 $20 JSR $FFED   6  
+  .C:dca5 $A2 LDX #$0E    2        
+  .C:dca7 $C6 DEC $A3     5   
+  .C:dca9 $D0 BNE $DC94   3/2  
+  .C:dcab $60 RTS         6*  
+                           
+* doesn't matter for timing during writing one byte
+
+We count the cycles writing Bit 1 (within the byte, means coming from
+dca2...fff7 where the last bit
+was written):
+
+2+5+3+5+3+2+6+5*14+66 = 162 cycles to the "down"-trigger
+2+2+2+6+5*17+66 = 163 cycles to the "up"-trigger
+
+Counting the cycles writing Bit 0 (within the byte, means coming from
+dca2...fff7 where the last bit was written):
+2+5+3+5+3+2+6+5*14+11 = 107 cycles to the "down"-trigger
+2+2+2+6+5*17+11 = 108 cycles to the "up"-trigger
+
+Loading a file the datasette only interrupts at down-triggers (or was it
+up-triggers?), so we have 325 cyles for a Bit 1 and 215 cycles for a Bit 0.

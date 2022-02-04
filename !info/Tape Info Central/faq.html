@@ -1,0 +1,69 @@
+<script src="//archive.org/includes/analytics.js?v=cf34f82" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app57.us.archive.org';v.server_ms=2386;archive_analytics.send_pageview({});});</script><script type="text/javascript" src="/_static/js/playback.bundle.js?v=BsQ6byDz" charset="utf-8"></script>
+<script type="text/javascript" src="/_static/js/wombat.js?v=cRqOKCOw" charset="utf-8"></script>
+<script type="text/javascript">
+  __wm.init("https://web.archive.org/web");
+  __wm.wombat("http://www.geocities.com:80/SiliconValley/Platform/8224/c64tape/faq.html","20080129162023","https://web.archive.org/","web","/_static/",
+	      "1201623623");
+</script>
+<link rel="stylesheet" type="text/css" href="/_static/css/banner-styles.css?v=NHuXCfBH" />
+<link rel="stylesheet" type="text/css" href="/_static/css/iconochive.css?v=qtvMKcIJ" />
+<!-- End Wayback Rewrite JS Include -->
+<title>Commodore 64 Tape Transfer FAQ</title>
+<h1>Commodore 64 Tape Transfer FAQ</h1>
+You have got a huge collection of C64 tapes and you want to use them on your PC? Or you want to play the game you just downloaded from the Internet on your C64? Here are the answers to some questions about transfers from PC to tape and back.
+<p><b>Q: I have got a C64 game on tape and I want to play that game on a PC using an emulator. How should I do?</b><br>
+A: The best solution is to create a TAP file. All C64 tapes can be converted to TAP. There are two ways to do so: connect your datassette or C64 to the PC's parallel port, or connect a tape player to your sound card. The former needs a custom-built cable, so you need to be an electronics freak to do that.
+<p><b>Q: Yes, I am an electronics freak. Which cable should I build, and which program should I use?</b><br>
+A: <a href="https://web.archive.org/web/20080129162023/http://arnold.c64.org/~minstrel/mtap.zip">mtap</a> by Markus Brenner supports the C64S tape interface, which allows you to connect the datassette to the PC, and the X1541/XE1541 cable, which allows you to connect your C64 to the PC. <a href="https://web.archive.org/web/20080129162023/http://cia.c64.org/tools/tapload070.zip">Tapload</a> by Richard Storer supports the C64S Tape Interface.
+<p><b>Q: No, I am just a plain PC user and I have got a soundcard. Can I do something?</b><br>
+A: Yes. Record the tape to a VOC file and use <a href="https://web.archive.org/web/20080129162023/http://cia.c64.org/tools/64util05.zip">64VOCTAP</a> by Tomaz Kac. Or record the tape to a WAV file and use <a href="https://web.archive.org/web/20080129162023/http://members.tripod.com/Andreas_Matthies/c64">Tape 64</a> by Andreas Matthies. Or connect the tape player to your sound card and use <a href="https://web.archive.org/web/20080129162023/http://tapir.sourceforge.net/">TAPir</a> by Andreas Andersson and Martin Sikström.
+<p><b>Q: I think that TAP files are too big and they take too long to load. I want to convert my game to PRG, P00 or T64. How should I do?</b><br>
+A: This is more difficult. In order to extract binary data from a tape, a program must know how those data are coded on the tape. Since the way data are coded changes from loader to loader, the program must know about the particular loader used. Because of this, not all tapes can be converted to PRG, P00 or T64. Some programs which do so exist:
+<ul>
+<li><a href="https://web.archive.org/web/20080129162023/ftp://ftp.funet.fi/pub/cbm/crossplatform/transfer/datassette/TurboTapeLoaderV1_3.zip">Turbo Tape Loader</a> by Sami Silaste supports Turbo Tape 64 loader. Accepts WAV files as input.
+<li>the above-mentioned <a href="https://web.archive.org/web/20080129162023/http://members.tripod.com/Andreas_Matthies/c64">Tape 64</a> support kernel ROM loader, Turbo Tape 64, Input 64 and Novaload. Accepts WAV and TAP files as input.
+<li><a href="https://web.archive.org/web/20080129162023/http://www.geocities.com/SiliconValley/Platform/8224/wavprg.html">WAV-PRG</a> by Fabrizio Gennari supports kernel ROM loader, Turbo Tape 64, Invade-a-Load, Zzap! Megatape and Players loader. Plug-ins for different loaders can be written. Accepts WAV and TAP files, and the soundcard, as input.
+<li><a href="https://web.archive.org/web/20080129162023/ftp://ftp.funet.fi/pub/cbm/crossplatform/transfer/datassette/cbmtt101.zip">C64LOAD</a> by Richard Storer supports kernel ROM loader. The input can be from the C64S tape interface as well as a WAV file.
+<li><a href="https://web.archive.org/web/20080129162023/ftp://ftp.funet.fi/pub/cbm/crossplatform/transfer/datassette/ttape010.zip">TTLOAD</a> by Andreas Jung supports Turbo Tape 64. The input can only be from the C64S tape interface.
+</ul>
+<p><b>Q: I downloaded a TAP file and I want to transfer it on a tape to play it on a C64. How do I do?</b><br>
+A: If you built a C64S tape interface or an X1541/XE1541 cable, you can use <a href="https://web.archive.org/web/20080129162023/http://arnold.c64.org/~minstrel/ptap.zip">ptap</a> by Markus Brenner. Otherwise, you can convert the TAP to a VOC file, or even play it on your soundcard, using <a href="https://web.archive.org/web/20080129162023/http://cia.c64.org/tools/64util05.zip">64TAPVOC</a> by Tomaz Kac.
+<p><b>Q: I downloaded a PRG, P00 or T64 file and I want to transfer it on a tape to play it on a C64. How do I do?</b><br>
+You can use:
+<ul>
+<li>the above-mentioned <a href="https://web.archive.org/web/20080129162023/http://www.geocities.com/SiliconValley/Platform/8224/wavprg.html">WAV-PRG</a>. It can convert the game to a WAV file, or play it on your soundcard.
+<li><a href="https://web.archive.org/web/20080129162023/ftp://ftp.funet.fi/pub/cbm/crossplatform/transfer/datassette/cbmtt101.zip">C64SAVE</a> by Richard Storer. It can convert the game to a WAV file or to the C64S tape interface.
+<li><a href="https://web.archive.org/web/20080129162023/ftp://ftp.funet.fi/pub/cbm/crossplatform/transfer/datassette/ttape010.zip">TTSAVE</a> by Andreas Jung. It can convert the game to the C64S tape interface.
+</ul>
+<p>
+This FAQ is maintained by <a href="https://web.archive.org/web/20080129162023/mailto:fabrizio.ge@tiscalinet.it">Fabrizio Gennari</a><br>
+<a href="index.html">Back to C64 Tape Info Central</a>
+<!-- text below generated by server. PLEASE REMOVE --></object></layer></div></span></style></noscript></table></script></applet>
+<script language="JavaScript">var PUpage="76001067"; var PUprop="geocities"; </script><script language="JavaScript" src="https://web.archive.org/web/20080129162023js_/http://www.geocities.com/js_source/pu4geo.js"></script><script language="JavaScript" src="https://web.archive.org/web/20080129162023js_/http://www.geocities.com/js_source/ygIELib9.js?v3"></script><script language="JavaScript">var yviContents='https://web.archive.org/web/20080129162023/http://us.toto.geo.yahoo.com/toto?s=76001067&l=NE&b=1&t=1020247430';yviR='us';yfiEA(0);</script><script language="JavaScript" src="https://web.archive.org/web/20080129162023js_/http://us.i1.yimg.com/us.yimg.com/i/mc/mc.js"></script><script language="JavaScript" src="https://web.archive.org/web/20080129162023js_/http://us.geocities.com/js_source/geov2.js"></script><script language="javascript">geovisit();</script><noscript><img src="https://web.archive.org/web/20080129162023im_/http://visit.geocities.com/visit.gif?1020247430" border="0" width="1" height="1"></noscript>
+<img src="https://web.archive.org/web/20080129162023im_/http://geo.yahoo.com/serv?s=76001067&amp;t=1020247430" alt="1" width="1" height="1">
+
+<!-- following code added by server. PLEASE REMOVE -->
+<!-- preceding code added by server. PLEASE REMOVE --><!-- text below generated by server. PLEASE REMOVE --></object></layer></div></span></style></noscript></table></script></applet><script language="JavaScript" src="https://web.archive.org/web/20080129162023js_/http://us.i1.yimg.com/us.yimg.com/i/mc/mc.js"></script><script language="JavaScript" src="https://web.archive.org/web/20080129162023js_/http://geocities.com/js_source/geov2.js"></script><script language="javascript">geovisit();</script><noscript><img src="https://web.archive.org/web/20080129162023im_/http://visit.geocities.yahoo.com/visit.gif?us1201623623" alt="setstats" border="0" width="1" height="1"></noscript>
+<img src="https://web.archive.org/web/20080129162023im_/http://geo.yahoo.com/serv?s=76001067&amp;t=1201623623&amp;f=us-w69" alt="1" width="1" height="1">
+<!--
+     FILE ARCHIVED ON 16:20:23 Jan 29, 2008 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 20:32:42 Oct 08, 2020.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
+<!--
+playback timings (ms):
+  captures_list: 664.934
+  RedisCDXSource: 89.939
+  PetaboxLoader3.resolve: 86.781
+  exclusion.robots: 0.204
+  LoadShardBlock: 546.483 (3)
+  esindex: 0.017
+  load_resource: 1713.39
+  PetaboxLoader3.datanode: 2044.604 (4)
+  exclusion.robots.policy: 0.189
+  CDXLines.iter: 23.188 (3)
+-->

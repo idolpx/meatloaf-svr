@@ -1,0 +1,29 @@
+Expert cartridge loader
+=======================
+  info by Fabrizio Gennari <fabrizio.ge@tiscalinet.it>
+
+Used by the Trilogic Expert cartridge to save freezed games. Also some commercial games (Eye of Horus...) use it
+
+Encoding:
+---------
+
+ Threshold: $141 (321) clock cycles
+ Bit 0: TAP byte $1F
+ Bit 1: TAP byte $33
+
+Data Endianess: MOST Significant bit First
+
+ Lead-In Byte :  $0F
+ Sync sequence:  $0E, $0D, $0C, $0B, $0A, $09, $08, $07, $06, $05, $04, $03, $02, $01, $00
+
+Structure:
+----------
+
+  The length of the block is calculated from Start and End address, which is
+written at the start of the block (after the SYNC Byte):
+
+ 00 Start Address of data (Low, High byte)
+ 02 End   Address of data (Low, High byte)
+ 04 Data
+ 05 Checksum (sum of the Data bytes + 1 for each Data byte, modulo $100 (256))
+

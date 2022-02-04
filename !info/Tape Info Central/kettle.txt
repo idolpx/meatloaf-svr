@@ -1,0 +1,35 @@
+Kettle Loader
+=================
+  info by Markus Brenner <markus@brenner.de>
+
+Encoding:
+---------
+
+ Bit 0:  384 T-States ($1b)
+ Bit 1:  526 T-States ($25)
+
+
+Data Endianess: MOST Significant bit First
+
+ Lead-In Byte:  $63
+    Sync Bytes: $64, $65, $66, ... , $ff
+
+   Start Byte:  if $00 restart loading
+
+Structure:
+----------
+
+  Synching consists of finding the Lead-In Byte, then reading further
+lead-in bytes until the Sync Byte Sequence is found. A start byte is
+read, and usually ignored.
+
+  The length of the block is calculated from Start and End address, which is
+written at the start of the block (after the SYNC Sequence):
+
+ 00 Start Address of data (Low, High byte)
+ 02 End   Address of data (Low, High byte)
+ 04-09    stored in Zero Page
+ 0a DATA
+ .. XOR Checksum of all Data
+
+Still to find out: - Nothing

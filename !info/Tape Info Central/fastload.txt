@@ -1,0 +1,36 @@
+Gremlin's Fastload
+------------------
+Info by Luigi Di Fraia <armaeth@libero.it>
+
+Used in: "Cybernoid" (from Zer0-X), "Deflektor", "Mask 2" and "North Star" 
+(supplied by c64heaven)
+
+Structure:
+  There are 2 complete CBM files. Fist CBM part is loaded at $02A7, autoexecutes 
+  and loads a 2nd complete CBM file (which contains the Turbo Loader) at $0400 
+  (video area) and executes it.
+  Second CBM file has different names:
+    "FASTLOAD" in "Deflektor" and "Mask 2" (Header CRC32: $26768E85) 
+    "HELLO" in "Cybernoid" and "North Star" (Header CRC32: $B3A82F14)
+Turbo blocks:
+  Bit 0: $32
+  Bit 1: $63
+  Endianess: MSbF
+
+  Lead-in: Bit 1 pulses (x215 about)
+  Sync: a single Bit 0 pulse
+
+  Header:
+  ------
+
+  2 bytes: File ID ("01", "02", "03", etc.)
+  2 bytes: Load address (Low/High)
+  2 bytes: Data Size (Low/High)
+
+  Data (last pulse is usually broken = not matching given pulse lengths)
+
+  Trailer: none found.
+
+Notes:
+  some pulses were found before the first turbo block leader. They were used as 
+  separator: 7-8 Bit 1 pulses and 169 Bit 0 pulses. They must be kept.

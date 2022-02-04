@@ -1,0 +1,73 @@
+PAVLODA (Penetrator version)
+----------------------------
+Info by Fabrizio Gennari (fabrizio.ge@tiscalinet.it)
+
+Can be found on Penetrator (actually, Penetrator has one short block in old Pavloda format,
+the rest uses this loader)
+
+
+Endianess: MSbF
+
+Theoretically, there are 6 types of pulses
+
+Type              Threshold (clock cycles)  TAP byte
+---------------------------------------------------
+very short        0xf2  (242)
+short             0x1a6 (422)               $2c
+medium            0x258 (600)               $41
+long              0x358 (856)               $57
+very long         0x50c (1292)
+extremely long
+
+Each pulse is shorter than its threshold, and longer than the previous one's threshold.
+Actually, only 3 pulse types, Short, Medium and Long, are used.
+
+---------------------------------
+Encoding...
+
+Pulses have a different meaning, depending on the current "Status" :
+
+When in Status 1...
+---------------------------------
+Pulse  | Bit pattern | New Status
+---------------------------------
+Short  | 1           | 1
+Medium | 00          | 2
+Long   | 01          | 1
+---------------------------------
+
+When in Status 2...
+---------------------------------
+Pulse  | Bit pattern | New Status
+---------------------------------
+Short  | 0           | 2
+Medium | 1           | 1
+Long   | 1           | 1
+---------------------------------
+
+Initial status = 2.
+
+-----------------------------
+
+Structure
+----------------------
+
+At the start, there is a repeated pattern of pulses like:
+MMSSSSS
+(M=medium, S=short)
+If initial status is 1, it decodes to 00111111, and the final status is 1
+If initial status is 2, it decodes to 10000000, and the final status is 2
+
+When looking for sinchronization, if the byte $3F (00111111) is encountered,
+status is forced to 2. This causes the synchronization to the right status, before
+synchronizing on the right bit.
+
+Lead-in byte : $08 (00001000) (no less than 255 of them, typically 1280)
+Sync byte    : $55
+
+2 bytes : Start address (low,high)
+2 bytes : End address (low,high)
+n bytes : Data (n = End address - Start address)
+1 byte : Checksum (sum of all n data bytes + n) & 0xFF.
+
+In other words you need to add all n Data bytes and add 1 for each of them.

@@ -1,0 +1,104 @@
+ROM Loader
+==========
+  info by Richard Storer <rstorer@cyberspace.org> ,
+          Ben Castricum  <webmaster@cia.c64.org> ,
+          Tomaz Kac      <Tomaz.Kac@uni-mb.si>
+
+Encoding:
+---------
+
+  Three different Pulses are used : (these are NOT 100% accurate)
+
+ Short  (s) : 616  T-States
+ Medium (m) : 896  T-States
+ Long   (l) : 1176 T-States
+
+ Pilot wave:           s
+ Sync waves:           l , m
+ Data waves:  Bit 0:   s , m
+              Bit 1:   m , s
+ Trailing Tone wave:   s
+
+ Each Data Byte has: - 8 Data Bits  (LEAST Significant bit First !)
+                     - Checksum Bit (XOR of all Bits (starting value is 1))
+                     - End waves
+
+ End waves can be: Continue   :  l , m   (if there is more data to follow)
+                   End Of Data:  l , s   (if there is no more data)
+
+ Trailing Tone is present after Repeated blocks (see below) only !
+
+Still to find out: 100% Correct timings (Now gathered from TAP files) !
+~~~~~~~~~~~~~~~~~~
+
+Structure:
+----------
+
+  When C64 Saves data to tape it normally creates 4 tape blocks. First two are
+HEADER (always the same length: 202 bytes) and last two are DATA. Why two blocks
+for each ? For security reasons... i.e. Header is saved two times (with
+different flag and some other stuff) and Data is saved twice too...
+
+So the structure on tape is:
+
+   Header
+   Header repeated
+   Data
+   Data repeated
+
+  Pilot tone of Header is around 25000 waves long (it can be longer or shorter),
+the pilot tone of Data is around 6000 waves long (again, it varies). BUT both
+repeated blocks have always 79 waves of pilot tone.
+
+  It is a good idea to set the shortest possible pilot tone length to 79 waves,
+since a lot of programs save some additional pilot tones which can confuse the
+decoder... :)
+
+  Both Header and Data blocks have the following sequence in first 9 bytes:
+
+$89 $88 $87 $86 $85 $84 $83 $82 $81
+
+  Both Header and Data REPEATED blocks have the same sequence with bit 7 reset:
+
+$09 $08 $07 $06 $05 $04 $03 $02 $01
+
+  Normally the Header Repeated and Data Repeated have a Trailing Tone after
+the Data, which is normally 78 or 79 s waves ! Some loaders depend on these
+being present !
+
+  After those 9 bytes, comes the header block (192 bytes):
+
+    00 File Type: this can be any number from $01 to $05
+
+       $01 - Basic file
+       $02 - Data block (for a seq file)
+       $03 - Fixed address file
+       $04 - Seq file
+       $05 - End of tape maker
+
+       $01 (Basic) files are relocatable: the start address is moved to the
+       location pointed to by the locations 43 ($2B) and 44 ($2C), and the end
+       address is moved by the same amount. This can be overridden by typing
+       LOAD"NAME",1,1 (to load the file named NAME) or LOAD"",1,1 (to load the
+       first found file): in those cases, the start and end addresses provided
+       by the header will always be used. $03 files are fixed-address files: the
+       start and end addresses provided by the header will always be used, no
+       matter whether the flag ,1,1 is set or not.
+
+    01 Start Address (Low, High byte)
+    03 End   Address (Low, High byte)
+    05 FileName (16 bytes)
+    21 data (171 bytes)
+
+The header block is stored in RAM in the so-called "cassette buffer", from
+location 828 ($033C) to location 1019 ($03FB). Normally the data after the
+filename are all spaces (ASCII $20), but, in many cases, some data is here: for
+example, many turbo loaders put part of their code in here. After the header
+block, a checksum byte (XOR of all the 192 header block bytes) is present.
+
+  For the Data and Data Repeated block the Data starts immediately after the
+starting 9 bytes sequence. At the end of Data block, a checksum (XOR of all data
+bytes) is present.
+
+Still to find out: - Correct pilot tone lengths for Header and Data
+~~~~~~~~~~~~~~~~~~

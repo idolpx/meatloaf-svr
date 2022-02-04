@@ -1,0 +1,51 @@
+Mikro-Gen Loader
+================
+Info by Netraider (netraider@mail.pt)
+
+Mikro-Gen Loader v1
+These are amongst the first games released for the C64 and as such the loader is quite primitive. It doesn't even use CIAs for pulse timing.
+Used by Pyjamarama (1984), Auto Mania (1985)
+
+Mikro-Gen Loader v2 (aka Hyperload / Load'n Go)
+Games using this loader include : Everyone's a Wally (1985),
+Herbert's Dummy Run (1985), Witch's Cauldron (1985), Battle of the Planets
+(1986), Frost Byte (1986), Equinox (1986).
+
+Description:
+Short pulse = $38
+Long pulse = $66
+Bit 0 = Short
+Bit 1 = Long
+Threshold = 512 clock cycles
+Pilot (v1)= 256 pulses longer than 1441 cycles, followed by any number of
+pulses between 884 and 1924 cycles (typically, 1024 pulses between 1441 and
+1924 cycles)
+Pilot (v2)= Bit 1 (at least*256) (exactly 2048 from TAPs)
+Sync (v1)= one pulse shorter than 884 cycles
+Sync (v2)= Bit 0
+Endianess : LSbF
+Checksum : Yes, last byte contains complement to zero of all added bytes (that
+is, sum of all data bytes+checksum = 0 modulo 256).
+
+The start and end addresses of a block are not in the block itself. Instead,
+they are in the loader's code. In v1, there is a single block following the
+loader. To get the start address, one has to find the following string in the
+loader:
+'a9 xxL 85 fd a9 xxH 85 fe ad 0e dc 29 fe 8d 0e dc'
+xxL, xxH - start address (low/high)
+To get the end address, one has to find the following string in the
+loader:
+'e6 fe a5 fe c9 yy d0'
+The end address is yy*256-1.
+
+In v2, here are 2 blocks after the loader, one for the loading screen and another for the main game.
+The common way to indentify start and end address is searching the 2 occurrences of the following string in the loader, one for each block:
+'a9 xxL 85 fd a9 xxH 85 fe a9 yyL 85 f8 a9 yyH 85 f9 ad 0e'
+ xxL, xxH - start address (low/high)
+ yyL, yyH - end address+1 (low/high)
+
+At the end of each block there's a checksum byte.
+After loading a block the checksum verification routine is called, that adds all bytes including the checksum byte containing the complement to zero of all added bytes.
+
+If, during a load, a pulse's duration exceeds 1024 clock cycles, a load error condition immediately occurs.
+

@@ -1,0 +1,43 @@
+Ocean/Imagine Loader
+===================
+  info by Ben Castricum <webmaster@cia.c64.org> ,
+          Markus Brenner <brenner@libelle.biochem.mpg.de>
+
+Encoding:
+---------
+
+Uses the same encoding as Standard Turbo Tape.
+
+ Bit 0:  511 T-States
+ Bit 1: 1222 T-States
+
+Data Endianess: LEAST Significant bit First
+
+ Pilot tone is Bit-0 Repeated atleast 3000 Times and it ends with single Bit 1 !
+ 
+Still to find out: 100% Correct Timings (Now gathered from TAP files) !
+~~~~~~~~~~~~~~~~~~
+
+Structure:
+----------
+
+  There are 3 different Ocean/Imagine loaders found so far. The difference are
+very small, so almost the same decoding can be used.
+
+  The Types 2 & 3 have additional FLAG byte after the Sync Bit.. this FLAG is
+ 0xAA.
+
+  Data is structured from blocks, each block is 256 bytes long. The following
+information is sent before each block of all three types:
+
+  00 if it is $01 then write $00 to address $0001 (Page in RAM !)
+  01 HIGH Byte of Load Address
+  
+After the HIGH Byte of Load Address the 256 bytes of Data follow.
+
+  The END of loading is signalled by this byte being $00 for Types 1 & 2 ,
+Type 3 has the END of the loading signalled by byte $02 !
+
+  Types 1 & 2 also have some TRAILING Tone present, which should be read in !
+
+Still to find out: - Nothing :)

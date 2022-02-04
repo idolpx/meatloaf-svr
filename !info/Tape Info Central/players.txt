@@ -1,0 +1,62 @@
+Players Loader
+=====================
+  info by Ben Castricum <webmaster@cia.c64.org>
+
+Encoding:
+---------
+
+Uses the same encoding as Standard Turbo Tape.
+
+ Bit 0:  682 T-States
+ Bit 1: 1008 T-States
+
+Data Endianess: LEAST Significant bit First
+
+ Lead-In Byte:  $A0
+    Sync Byte:  $0A
+
+Still to find out: 100% Correct Timings (Now gathered from TAP file)
+~~~~~~~~~~~~~~~~~~
+
+Structure:
+----------
+
+NOTE: There are 3 ROM chunks in front of the custom blocks. There MUST be Pilot
+      Tone AFTER each of the DATA ROM Blocks (not the Headers) ... otherwise you
+      will get flashing square when the game starts. 
+
+  This loader uses the Lead-In and SYNC sequence ONLY for the first custom
+block. All blocks that follow it are without the Lead-In tone and Sync sequence
+and MUST follow the previous block immediately with the Information.
+
+  Sync Sequence of the first block (after the Sync Byte which is $0A) looks
+like this :
+
+$09 $08 $07 $06 $05 $04 $03 $02 $01
+
+  Then the following information is given :
+
+ 00 End Address of data - 1 (Low, High byte)
+ 02 Length of data          (Low, High byte)
+ 04 If this byte is $FE or $FF, this is the last block
+ 05 DATA
+ .. CheckSum byte
+
+  The DATA is loaded in from End to Start (in the opposite direction) !
+
+  DATA is encrypted in the following way:
+
+Real_Value = Value ^ (Address & 0xFF);
+
+(Address being the address to which the byte will be loaded)
+
+  The Checksum is then computed from the Real_Values and is XOR of all Data !
+
+  The End Address AND Length of the Data of the LAST block will be $0000 !
+If you want the game to start then you will have to convert the two bytes after
+the end address and length to let the game start. (note that the LAST byte that will
+be read will NOT have 8 bits, but 7 ... dunno why though).
+
+(length of block = end (2) + len (2) + Flag (1) + checksum (1) = 6)
+
+Still to find out: - Nothing

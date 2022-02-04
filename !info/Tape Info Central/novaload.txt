@@ -1,0 +1,63 @@
+NovaLoad
+==============
+  info by Tomaz Kac <Tomaz.Kac@uni-mb.si> ,
+          Markus Brenner <brenner@libelle.biochem.mpg.de>
+
+Encoding:
+---------
+
+ Bit 0:  511 T-States
+ Bit 1: 1222 T-States
+
+  Data Endianess: LEAST Significant bit First
+
+  Pilot Tone is constructed of MANY $00 Bytes (normally 255-257). Pilot end's
+when Bit 1 is read. After this bit the actual Data starts.
+
+Still to find out: 100% Correct Timings (Now gathered from TAP files) !
+~~~~~~~~~~~~~~~~~~
+
+Structure:
+----------
+
+  First byte of a block is always $AA which is considered as FLAG byte.
+  
+  The Second byte read can either be $55 in which case this block is considered
+as 'Special' block, if it is anything else than $55 than this is the following
+data that is present (including this byte):
+
+  1 byte  Length of filename    (this can be $00 - then no filename follows !)
+  n bytes Filename
+  2 bytes Load Address        - $100 (you have to add $100 to get actual add.)
+  2 bytes End  Address
+  2 bytes Length of the block + $100 (here you must substract $100 to get len.)
+  
+After this a series of sub-blocks start with the length of DATA being 256 if
+there is some more data avialble otherwise the length is whatever is left...
+  
+  1 byte  Checksum so far
+  n bytes Data (either 256 or less bytes)
+
+This is then repeated until whole data is read in from the 256 long blocks.
+
+After all sub-blocks there is FINAL Checksum ...
+
+The checksum starts with the first byte read (Length of filename) and is
+normal addition of all bytes (you have to do checksum = (checksum + byte) & 0xFF
+to get correct result). After you check the checksum you must also add it !
+
+If the Length of filename (the byte after the FLAG) is $55 then the block
+structure is different:
+
+    1 byte  Load Address HIGH Byte only
+  256 bytes Data
+    1 byte  Checksum
+
+This is first repeated UNTIL Load address is $F0 , after which is again repeated
+UNTIL Load address is $00 ! 
+
+The Checksum is calculated the same way as before (starts with the 1st byte AFTER $55).
+
+All blocks also have some TRAILING Tone present after the end of the block.
+
+Still to find out: - Nothing

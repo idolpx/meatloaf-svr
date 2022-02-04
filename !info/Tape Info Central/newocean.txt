@@ -1,0 +1,63 @@
+New Ocean tape
+--------------
+info by Luigi Di Fraia <armaeth@libero.it>
+
+Structure:
+  It's a freeload clone with an additional byte in Turbo blocks header
+
+Endianess: MSbF
+
+Pilot byte: $40 (x128, 1024 pulses)
+Sync byte: $5A
+
+variant 1
+---------
+Used in: "Addams Family", "Adidas Soccer", "Cool World", "Hook", "Hudson Hawk", "Midnight Resistance", "SlySpy" and "WWF Wrestlemania" (supplied by c64heaven)
+
+
+Turbo blocks:
+
+      2 pulsewidth sets have been found so far:
+
+                        Adidas Soccer, 	 	Addams Family,
+                        Hudson Hawk, 	 	Cool World,
+                        Hook, 	 	 	SlySpy,
+                        Midnight Resistance 	WWF Wrestlemania 	
+bit 0 (TAP byte) 	$22	 	 	$35
+bit 1 (TAP byte)       	$42	 	 	$65
+threshold (clock cycles)360 	 	 	636
+
+
+Header
+------
+      1 byte: File ID, mostly ignored by some games
+      2 bytes: Load address (Low/High)
+      2 bytes: End address (Low/High)
+      Data
+
+      1 byte: XOR checksum of all data bytes
+
+      Trailer: 1 longer pulse (eg. $65) or 8 bits (variuos combinations were found) + 1 longer pulse (type 2). 
+
+
+variant 2
+---------
+Used in: "Heroquest", "Blues Brothers", "The Jetsons", "Klax", "Shadow Warriors"...
+
+                            Klax,           Heroquest,
+                            Shadow Warriors Blues Brothers
+  Threshold (clock cycles)..360.............432
+  Bit 0 (TAP byte)..........$22.............$28
+  Bit 1 (TAP byte)..........$42.............$51
+
+  Header
+  ------
+    2 bytes: Load address (Low/High)
+    2 bytes: End address (Low/High)
+    1 byte: file ID (not checked if searching for #$00)
+
+  Data
+
+  1 byte: XOR checksum of all data bytes
+
+  Trailer: 1 longer pulse (eg. $80). 

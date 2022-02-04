@@ -1,0 +1,36 @@
+Zoids Loader
+================
+  info by Markus Brenner <markus@brenner.de>
+
+  This loader includes three types of loaders:
+
+  first:  standard ROM blocks
+  second: modified standard turbo tape file, without header or checksum
+  third:  several 180 loader blocks
+
+ Bit 0:  469 T-States ($21) (180 loader)
+ Bit 1:  951 T-States ($43) (180 loader)
+
+
+Encoding:
+---------
+
+ Bit 0:  370 T-States ($1a) (turbo tape)
+ Bit 1:  540 T-States ($26) (turbo tape)
+
+Data Endianess: MOST Significant bit First
+
+ Lead-In Byte:  $02
+    Sync Byte:  $09, $08, $07, $06, $05, $04, $03, $02, $01
+  Header Byte:  != 0x00
+
+Structure:
+----------
+
+ 00 Start Address of data (Low, High byte)
+ 02 End   Address of data (Low, High byte)
+ 04 DATA
+
+no checksum
+
+Still to find out: - nothing

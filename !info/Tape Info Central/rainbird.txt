@@ -1,0 +1,13 @@
+Rainbird Loader
+===================
+  info by Markus Brenner <markus@brenner.de>
+
+Encoding:
+---------
+
+ Bit 0:   767 T-States ($36)
+ Bit 1:  1009 T-States ($47)
+
+Everything else but pulse lengths identical to 'Kettle' loader.
+
+Still to find out: - nothing

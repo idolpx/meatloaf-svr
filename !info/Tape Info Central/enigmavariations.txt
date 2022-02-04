@@ -1,0 +1,41 @@
+Enigma Variations
+-----------------
+info by Netraider <netraider@mail.pt>
+
+Found on: 
+-Defenders of the Earth 
+-Count Duckula 
+-Hong Kong Phooey 
+-Postman Pat 
+-Postman Pat 2 
+-Sooty and Sweep 
+-Thomas the Tank Engine 
+-Slug 
+-Father Christmas 
+...and possibly more 
+
+Low bit pulsewidth range: $00-$2D 
+From TAP(s): $22 
+
+High bit pulsewidth range:$2E-$6D 
+From TAP(s): $42 
+
+Threshold: $2D (TAP byte), $168 (360) clock cycles
+Endianess: MSbF 
+
+Lead in bytes (block start area): $40(multiple), $5a(x1), main data 
+Lead in length (min.): 1 (byte $40) 
+From TAP(s): 768 (byte $40) 
+
+Blocks: 
+First block is loaded at $0800, $0900 or $0c00 depending on game and is $0200 bytes long. 
+Number and addresses of blocks varies according to game. 
+
+Block checksums:none 
+
+Additional information: 
+First block start and end addresses are hard coded in main loader. 
+Execution is then passed to this first block that sets following block addresses and 
+reuses main load routine. 
+Start block address is always set at ($0060) (low byte) and ($0061) (high byte)
+End block address is always set at A register (low byte) and Y register (high byte). Then main load routine is invoked, and as first thing it moves end address in ($0062) (low byte) and ($0063) (high byte)

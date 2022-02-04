@@ -1,0 +1,57 @@
+TENGEN/DOMARK and IMAGE WORKS tape
+----------------------------------
+Info by Luigi Di Fraia <armaeth@libero.it>
+
+Used in: "3D construction kit", "Cisco Heat" (IW) [Multiloaded], "Skull and 
+Crossbones" [Multiloaded], "Pit Fighter" [Multiloaded], "Badlands", "Rampart" 
+[Multiloaded], "Rugby the World Cup" [Multiloaded], "The Spy who loved me" 
+[Multiloaded], (thanks to c64heaven for those last 4 taps and "3DCK") and 
+probably a lot of other TENGEN/DOMARK Releases.
+
+Structure:
+  There are 2 complete CBM files. Fist CBM part (DATA size: 2 -two- bytes, Loads 
+  at $029F: 51 03, CRC32: $848FD0AF) autoexecutes, loads 2nd complete CBM file 
+  (which contains the Turbo Loader) and executes it.
+  Autostarting ROM cartridges are disabled.
+
+Turbo blocks:
+  Bit 0: $44
+  Bit 1: $65
+  Endianess: LSbF
+
+  Pilot byte: $A0 (x255, but a pulse is often missing)
+  Sync sequence: $0A, $09, ..., $01
+
+  Header:
+  -------
+  Type 1 (used to load first blocks only)
+
+    2 bytes: Length of Data (Low/High)
+    1 byte: file ID
+
+  Type 2 (used for multi-load parts, if any is present)
+
+    2 bytes: Length of Data (Low/High)
+    2 bytes: Load address (Low/High)
+    n bytes: file name (size is customable) 
+
+      n=1 in "Skull and Crossbones"
+      n=2 in "Cisco Heat", "Hydra" and "Pit Fighter"
+      n=4 in "Rampart"
+
+  Data:
+  -----
+  -Length of Data- bytes: encrypted data.
+    To uncrypt do:
+      data = data ^ a;
+      a = (a + 1) & 0xff;
+    setting a=0 BEFORE reading the first encrypted data byte.
+
+  1 byte: XOR Checksum of uncrypted Data
+
+  Trailer: usually few Bit0/Bit1 pulses followed by a bigger pulse (eg. $76-$82)
+
+
+Notes:
+  Header type could be identified by calculating the XOR checksum.
+  "Load address" is sometimes ignored ("Cisco Heat", "Pit Fighter", "Rampart"). 

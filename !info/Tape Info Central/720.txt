@@ -1,0 +1,36 @@
+720 Loader
+===============
+  info by Ben Castricum <webmaster@cia.c64.org>
+
+Encoding:
+---------
+
+Uses the same encoding as Standard Turbo Tape.
+
+ Bit 0: 525 T-States
+ Bit 1: 895 T-States
+
+Data Endianess: MOST Significant bit First
+
+ Lead-In Byte:  $20
+    Sync Byte:  $FF
+
+Still to find out: 100% Correct Timings (Now gathered from TAP files) !
+~~~~~~~~~~~~~~~~~~
+
+Structure:
+----------
+
+  Right after the Sync Byte there are 16 bytes which form the FileName. The
+length of the block is calculated from Start and End address, which is written
+after the Filename:
+
+ 00 Filename (16 bytes)
+ 10 Start Address of data (Low, High byte)
+ 12 End   Address of data (Low, High byte)
+ 14 Data
+
+  After the start and end address the actual data is found. There is no XOR
+checksum in this loader...
+
+Still to find out: - Nothing :)

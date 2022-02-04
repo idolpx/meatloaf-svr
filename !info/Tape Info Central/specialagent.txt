@@ -1,0 +1,55 @@
+Audiogenic loader
+=====================
+  info by Fabrizio Gennari <fabrizio.ge@tiscalinet.it>
+
+Used by Emlyn Hughes' International Soccer, Exile, Impact, Loopz, World Class Rugby...
+
+
+Encoding:
+---------
+ Threshold: $13F 
+ Bit 0: $1A TAP byte
+ Bit 1: $37 TAP byte
+
+Data Endianess: MOST Significant bit First
+
+Structure:
+----------
+This loader stores data in a sequence of blocks. Blocks can be data blocks,
+which contain 256 data bytes and are loaded starting at a page boundary
+(address multiple of 256), or empty blocks.
+Each block has a pilot tone of $F0 bytes and a sync byte of $AA.
+If the first byte of a block is 0, 1 or 2, the block is an empty block. 
+Otherwise, it is a data block: the byte is the page where the data are loaded 
+(the start address is that byte * 256).Then come 256 data bytes and a checksum 
+byte (XOR of the 256 data bytes). A trailing sequence of eight 0 bits ends each 
+block. After a 1 block, loading continues but the following data block needn't 
+be consecutive. After a 0 block or a 2 block, loading stops
+and code is executed. If that block is the very last, the code starts the 
+program. Otherwise, it displays the loading screen or does other things then 
+jumps to the loader again, so new data is loaded. Note that "empty" blocks (0,
+1 and 2 blocks) are not actually empty, they are followed by 256 bytes and a checksum, but those bytes are ignored.
+
+Data blocks are stored consecutively, i.e. the page of a block is the
+page of the previous block + 1. Exception: if a block is stored in page $CF
+(i.e. at addresses $CF00-$CFFF), it can be followed by a data block starting anywhere.
+Typically, such block is the very first data block.
+
+
+Special Agent/Strike Force Cobra loader
+=======================================
+Used by Special Agent and Strike Force Cobra. Very similar to the previous one. Differences are:
+* There are three types of pulses. 
+                      Special Agent Strike Force Cobra
+Bit 0..................~512.........~368
+Bit 1.................~1088.........~816
+Very long pulse.......~1360........~1448
+Threshold 0-1...........712..........594
+Threshold 1-very long..1256.........1151
+
+* Every block starts with a sequence of very long pulses (no less than 5 of
+them, typically 30-31 of them), followed by 3 normal pulses (0s or 1s). After
+that, comes the first byte of the block.
+* In Special Agent (but not in Strike Force Cobra), empty blocks cannot start
+with a 2 byte, only 0 and 1 are allowed
+

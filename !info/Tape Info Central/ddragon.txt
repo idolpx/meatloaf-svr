@@ -1,0 +1,27 @@
+Double Dragon Loader
+=====================
+  info by Fabrizio Gennari <fabrizio.ge@tiscalinet.it>
+
+Used by Double Dragon
+
+Encoding:
+---------
+
+Threshold: 360 clock cycles
+
+Data Endianess: MOST Significant bit First
+
+ Lead-In Byte:  $80
+    Sync Byte:  $40
+
+Structure:
+----------
+
+After sync byte, the following information is given :
+
+ 00    Block number (identifies the block)
+ 01-02 Start Address of data (Low, High byte)
+ 03-04 End Address of data (Low, High byte)
+ 05    DATA
+
+No checksum

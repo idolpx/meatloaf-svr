@@ -1,0 +1,90 @@
+Snakeload
+=========
+  info by Luigi Di Fraia <armaeth@libero.it>
+
+V5.0
+----
+
+Used in: "Soldier of Light" (under check), "Shinobi", "Saint Dragon", "Ninja 
+Warriors", "Narc" (last two supplied by c64heaven) and probably some more.
+
+Structure:
+  This turbo loader is usually contained in a CBM file loaded at $0801 (BASIC 
+  area) without an autostart.
+
+  The following text was found in "Ninja Warriors"' CBM Data file:
+    SNAKELOAD V5.0 (C) STEVE SNAKE, KML 1987. THIS IS NOT SUPPOSED TO BE 
+    PROTECTED
+    SO DON'T THINK YOU ARE GOOD FOR CRACKING IT !!!KYLIE RULES!
+Turbo blocks:
+  2 pulsewidth sets have been found so far:
+
+                           Shinobi,Ninja Warriors Saint Dragon,Narc
+        bit 0              $60                    $3F
+        bit 1              $A0                    $5F
+        threshold (cycles) $400 (1024)            $240 (576)
+  Endianess: MSbF
+
+  Pilot: Bit 0 pulses (x2063 = 257 bytes + 7 bits)
+  Sync: a single Bit 1 pulse
+
+  Header
+  ------
+  5 bytes: 65 69 6C 79 4B: "eilyK" - Identifier (read backwards: "Kylie")
+
+  1 byte: File ID
+  2 bytes: Load address (Low/High)
+  2 bytes: End address (Low/High)
+
+  Data
+
+  1 byte: Checksum (addition of datas)
+
+  Trailer: Bit 0 pulses, last one being usually longer.
+    x2032 = #$FE bytes in "Shinobi"
+    x248  = #$1F bytes in "Narc", "Saint Dragon" and "Ninja Warriors"
+
+
+
+V5.1
+----
+
+Used in: "Final Blow", "Rodland", "SWIV" (supplied by c64heaven) "Double Dragon 
+3", "Indy Heat" (supplied by Mr.Fox).
+
+Structure:
+  This turbo loader is usually contained in a CBM file loaded at $0801 (BASIC 
+  area) without an autostart. 
+Turbo blocks:
+  Bit 0: $28
+  Bit 1: $48
+  Endianess: MSbF
+
+  Pilot: Bit 0 pulses (x2055, 256 bytes + 7 bits)
+  Sync: a single Bit 1 pulse
+
+  Header
+  ------
+
+  8 bytes: Identifier, read backwards. 3 of them have been found:
+
+    B2 B4 B2 D4 CE CF D2 C6 ("FRONT242" - Uppercase and reversed) in "Final 
+    Blow", "Rod Land (Side1)" 
+    85 8C 8C 85 88 83 89 8D ("MICHELLE" - Lowercase and reversed) in "S.W.I.V. 
+    (Side1)" 
+    C8 C3 D4 C9 D2 C4 CC C5 ("ELDRITCH" - Uppercase and reversed) in "Rod Land 
+    (Side2)", "Double Dragon 3", "Indy Heat" 
+
+  1 byte: File ID
+  2 bytes: End address (High/Low)
+  2 bytes: Load address (High/Low)
+
+  Data
+
+  1 byte: Checksum
+    Its value is calculated by XORing Data bytes and adding 1 to the XOR 
+    checksum AFTER a byte is stored at an address with low byte being #$FF (eg. 
+    $08FF, $7DFF, etc.).
+
+
+  Trailer: Bit 0 pulses (x512 = #$40 bytes).

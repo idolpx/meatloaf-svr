@@ -1,0 +1,76 @@
+Mastertronic Loader
+===================
+  info by Markus Brenner <brenner@libelle.biochem.mpg.de>,
+          Tomaz Kac <tomaz.kac@uni-mb.si>          
+
+Encoding:
+---------
+
+Uses the same encoding as Standard Turbo Tape BUT it has some differences !
+
+ Bit 0:  539 T-States
+ Bit 1: 1165 T-States
+
+Data Endianess: It changes during the loading !
+
+Also number of bits per byte changes during the loading !
+
+Some blocks have the Pilot tone, some don't.  First block has 9 bits  per  byte
+(additional  bit  is sent before the actual byte and it always has value 1), it
+has MSB endianess and it has 256 bytes of Pilot tone with value $00.
+ 
+Still to find out: 100% Correct Timings (Now gathered from TAP files) !
+~~~~~~~~~~~~~~~~~~
+
+Structure:
+----------
+
+  This loader changes its structure DURING actual loading.  The blocks that are
+loaded in are of different  length,  different endianess, have different number
+of additional bits before  each  byte  (their  value  is  always  1)  and  have
+different  number  of  header  bytes.  Also sometimes they have pilot bytes and
+sometimes they don't. 
+  You can determine all this by looking at the starting address of the block.
+
+Starting values of loading are :
+
+  Data Endianess           : MSB
+  Pilot tone               : yes
+  Additional bits per byte : 1
+  Additional header bytes  : 0
+
+If you should read some additional bits you must read them before  actual  byte
+starts,  this  is  done for all bytes (including Pilot bytes).  So the starting
+pilot byte that should be read  in  is  actually 100000000 (additional bit is 1
+and the byte has value $00).
+
+Block structure :
+
+  If pilot should be read then there are any number of bytes  $00  followed  by
+the  sync byte $16.  If the pilot should not be read then there is no sync byte
+either !
+
+  After that the additional Header bytes are sent (default is  0,  but  can  be
+changed later !)
+
+  Then the following 4 bytes are sent :
+
+  2 bytes : Block END   address HIGH, LOW
+  2 bytes : Block START address HIGH, LOW
+
+After that the actual DATA is sent !
+
+NOTE: if Block END == Block START then 1 byte will STILL be sent !!!
+
+AFTER you read in all the data you  must look at the START address ... here are
+the special cases that you must consider :
+
+  $034b : First DATA byte holds number of bits per byte for next block(s)
+  $03a4 : First DATA byte holds number of additional header bytes + 3
+  $0347 : if First DATA byte is $26 then next block will be MSB else LSB
+  $03bb : Next block will have PILOT tone before it (ANY number , can be 1 !)
+
+These  values  change  after  every  2  or  3  blocks, so the structure changes
+constantly through the loading.
+
+Still to find out: - Nothing :)

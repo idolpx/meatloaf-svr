@@ -1,0 +1,732 @@
+
+                                C=64 LOADERS
+                               ==============
+
+  General Stuff
+ ===============
+
+  The mechanism that detects the amplitude change on C64 only works in one way
+i.e. it only detects the change from HIGH -> LOW amplitude. For this reason all
+data on C64 is saved as a pair of pulses (it doesn't matter the length of each
+of these pulses, since the C64 adds up the lengths of both pulses).
+
+  The TZX format stores information about the Wave length as a PULSE length...
+i.e. half of the wave is stored. All information is given in T-States
+according to a 3.5Mhz clock (because the TZX format has been made in the first
+place for the ZX Spectrum, but MANY more computers have adopted it).
+  So all timings are written as if the clock is 3.5Mhz.
+
+  Currently Convertable Loaders:
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 1. ROM Loader
+    - All BASIC programs in front of other loaders ;)
+ 2. Standard Turbo Tape
+    - Most of the 'pirate' Turbo Tapes like Turbo 250, Turbo Tape 2, ...
+    - Hollywood Poker
+ 3. 180 Loader
+    - 180 Darts             - Legend of Amazon Women
+    - Robocop ZZAP! Demo    - Renegade
+    - Wizball               - Yie-Ar Kung Fu
+    - Slap Fight
+ 4. 720 Loader
+    - 720 Degress           - Out-Run
+    - Thunderblade          - Indiana Jones & Last Crusade
+    - Cosmic Causeway       - Rolling Thunder
+ 5. Ace of Aces Loader
+    - Ace of Aces
+ 6. Players Loader
+    - Joe Blade             - Crazy Coaster
+    - Delta
+ 7. NovaLoad
+    - Commando              - Summer Games II
+    - Pirates!              - Fighter Pilot
+    - Music Maker           - Bride of Frankenstein
+    - Labirynth             - Bruce Lee
+    - Flyer Fox             - Monty On The Run
+    - Spy Hunter            - Daley Thompson's Decathlon
+    - Ghosts'n'Goblins      - Beyond the Ice Palace
+    - BoulderDash C. Kit
+ 8. Ocean/Imagine Loader
+                   Type 1:
+    - Arkanoid              - Head Over Heels
+    - Mikie                 - Parallax
+    - Short Circuit         - Top-Gun
+    - Cobra                 - Green Beret
+    - Miami Vice            - Mutants
+    - Great Escape
+                   Type 2:
+    - Ping Pong             - Rambo: First Blood Part 2
+                   Type 3:
+    - Hyper Sports          - Frankie Goes To Hollywood
+ 9. Mastertronic Loader
+    - 1985                  - Action Biker
+    - Big Mac               - Bump Set Spike
+    - Hole in One           - One Man & His Droid
+    - Speed King            - Panther
+10. Kettle Loader
+	- Kettle
+11. Rainbird Loader
+    - Jewels of Darkness (parts 2 & 3)
+12. Zoids Loader
+    - Zoids
+
+  Loaders still to be done:
+  ~~~~~~~~~~~~~~~~~~~~~~~~~
+1. BleepLoad
+   - GunStar               - Sentinel
+   - Thrust                - Harvey Headbanger
+2. MicroLoad
+   - Break Fever
+3. Pavloada
+   - Bazooka Bill
+4. Cyberload
+   - Last Ninja            - Inner Space
+   - Last Ninja II
+
+  Unknown Loaders also to be done:
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   - Neil Android
+   - Time Zero
+   - Input 64 Diskmagazine
+   - Erebus
+   - Munroe Mansion
+   - Cybernoid II
+   - Ghostbusters
+   - Secret Diary of Adrian Mole
+   - Colony (this seems to be a variant of Mastertronic loader)
+
+
+  THE LOADERS:
+ ==============
+
+ 1. ROM Loader
+===============
+  info by Richard Marek Storer <rstorer@coventry.ac.uk> ,
+          Ben Castricum        <B.Castricum@bns.getronics.nl> ,
+          Tomaz Kac            <Tomaz.Kac@uni-mb.si>
+
+Encoding:
+---------
+
+  Three different Pulses are used : (these are NOT 100% accurate)
+
+ Short  (s) : 616  T-States
+ Medium (m) : 896  T-States
+ Long   (l) : 1176 T-States
+
+ Pilot wave:           s
+ Sync waves:           l , m
+ Data waves:  Bit 0:   s , m
+              Bit 1:   m , s
+ Trailing Tone wave:   s
+
+ Each Data Byte has: - 8 Data Bits  (LEAST Significant bit First !)
+                     - Checksum Bit (XOR of all Bits (starting value is 1))
+                     - End waves
+
+ End waves can be: Continue   :  l , m   (if there is more data to follow)
+                   End Of Data:  l , s   (if there is no more data)
+
+ Trailing Tone is present after Repeated blocks (see below) only !
+
+Still to find out: 100% Correct timings (Now gathered from TAP files) !
+~~~~~~~~~~~~~~~~~~
+
+Structure:
+----------
+
+  When C64 Saves data to tape it normally creates 4 tape blocks. First two are
+HEADER (always the same length: 202 bytes) and last two are DATA. Why two blocks
+for each ? For security reasons... i.e. Header is saved two times (with
+different flag and some other stuff) and Data is saved twice too...
+
+So the structure on tape is:
+
+   Header
+   Header repeated
+   Data
+   Data repeated
+
+  Pilot tone of Header is around 25000 waves long (it can be longer or shorter),
+the pilot tone of Data is around 6000 waves long (again, it varies). BUT both
+repeated blocks have always 79 waves of pilot tone.
+
+  It is a good idea to set the shortest possible pilot tone length to 79 waves,
+since a lot of programs save some additional pilot tones which can confuse the
+decoder... :)
+
+  Both Header and Data blocks have the following sequence in first 9 bytes:
+
+$89 $88 $87 $86 $85 $84 $83 $82 $81
+
+  Both Header and Data REPEATED blocks have the same sequence with bit 7 reset:
+
+$09 $08 $07 $06 $05 $04 $03 $02 $01
+
+  Normally the Header Repeated and Data Repeated have a Trailing Tone after
+the Data, which is normally 78 or 79 s waves ! Some loaders depend on these
+being present !
+
+  For the Header the following information is sent after those 9 bytes:
+
+    00 ID ? (for now only values of $03 and $01 have been found here)
+    01 Start Address (Low, High byte)
+    03 End   Address (Low, High byte)
+    05 FileName (16 bytes)
+
+  After the Filename there is some additional data, making the WHOLE length of
+the Header block 202 bytes long (including the 9 bytes at the beginning).
+
+  For the Data and Data Repeated block the Data starts immediately after the
+starting 9 bytes sequence.
+
+  Also there should be a XOR checksum somewhere, but I didn't have time yet to
+find out (I just use the BYTE checksums to determine if the data is OK).
+
+Still to find out: - Correct pilot tone lengths for Header and Data
+~~~~~~~~~~~~~~~~~~ - How to distinguish between Header and Data
+                     (without having to look at length of the block)
+                   - Where to find info about Data Type, ...
+                   - XOR Checksum of all Data (not just single Bytes)
+                   - Other stuff we don't even know about (what else is in
+                     the Header (it is 202 bytes long !), ... :)
+
+
+ 2. Standard Turbo Tape
+========================
+  info by Sami Silaste <sami@semaphore.demon.co.uk>
+
+Encoding:
+---------
+
+Uses another standard way of encoding... Pilot tone is basically Data Byte
+repeated many times ... to signal the end of pilot tone a different Byte is
+encountered.
+
+ Bit 0: 426 T-States
+ Bit 1: 596 T-States
+
+Data Endianess: MOST Significant bit First
+
+ Lead-In Byte:  $02
+    Sync Byte:  $09
+
+Still to find out: 100% Correct Timings (Now gathered from TAP files) !
+~~~~~~~~~~~~~~~~~~
+
+Structure:
+----------
+
+  Standard Turbo Tape stuff consists of two blocks. The first is the Header
+Block which is *normally* 32 bytes long (some sources tell me that it can be
+up to 188 bytes, but only first 21 are read) and it contains the length of the
+second, Data, block.
+  So far I haven't found any information on how to find out the length of the
+second (data) block without having to read the Header block first... so to
+correctly decode the block you will first have to read the first (header) block.
+
+  There is a number of lead-in bytes before each block (it varies, but it is
+always around 490 or similar, some Turbo Tape savers use more and some less, it
+is not important and the number should be read from the tape itself).
+
+  Both Header and Data block have the following sequence in first 8 bytes
+(after the Sync byte which is $09) :
+
+$08 $07 $06 $05 $04 $03 $02 $01
+
+  Then the ID byte is sent which is :
+
+    $00 for DATA block
+    $01 for Header block, BASIC Type
+    $02 for Header block, MACHINE CODE Type
+
+  For Header blocks the following data is sent after the ID :
+
+    00 Start Address of data (Low, High byte)
+    02 End   Address of data (Low, High byte)
+    04 ??? (whatever $00B0 contained at the time of saving)
+    05 Program Name (16 bytes)
+
+  After this there MIGHT be more bytes, which are filled with value $20. Some
+Save routines save upto 188 bytes long header (the space after Program Name is
+always filled with $20). It seems to be OK to only save first 32 bytes though.
+
+  For DATA block there is data (length is in the Header) immediately after the
+ID byte.
+  After the Data there is XOR checksum Byte, which is XOR of Data only (no ID or
+anything else)...  Note: Header does not have this XOR value (thats why you
+sometimes get those weird FOUND: A^#F#%#$  names when loading from tape ;) )!
+
+Still to find out: - A way to find out the length from 'Data' block only ?
+~~~~~~~~~~~~~~~~~~ - How to figure out when there are more than 32 bytes in
+                     Header data and if it is important?
+
+
+ 3. 180 Loader
+===============
+  info by Ben Castricum <B.Castricum@bns.getronics.nl>
+
+Encoding:
+---------
+
+Uses the same encoding as Standard Turbo Tape.
+
+ Bit 0: 511 T-States
+ Bit 1: 923 T-States
+
+Data Endianess: MOST Significant bit First
+
+ Lead-In Byte:  $40
+    Sync Byte:  $5A
+
+Still to find out: 100% Correct Timings (Now gathered from TAP files) !
+~~~~~~~~~~~~~~~~~~
+
+Structure:
+----------
+
+  The length of the block is calculated from Start and End address, which is
+written at the start of the block (after the SYNC Byte):
+
+ 00 Start Address of data (Low, High byte)
+ 02 End   Address of data (Low, High byte)
+ 04 Data
+ .. XOR Checksum of Data
+
+  After the start and end address the actual data is found. After the Data the
+XOR checksum byte is written, which is the XOR of all Data (the start and end
+address are NOT included in the XOR calculation).
+
+Still to find out: - Nothing :)
+~~~~~~~~~~~~~~~~~~
+
+
+ 4. 720 Loader
+===============
+  info by Ben Castricum <B.Castricum@bns.getronics.nl>
+
+Encoding:
+---------
+
+Uses the same encoding as Standard Turbo Tape.
+
+ Bit 0: 525 T-States
+ Bit 1: 895 T-States
+
+Data Endianess: MOST Significant bit First
+
+ Lead-In Byte:  $20
+    Sync Byte:  $FF
+
+Still to find out: 100% Correct Timings (Now gathered from TAP files) !
+~~~~~~~~~~~~~~~~~~
+
+Structure:
+----------
+
+  Right after the Sync Byte there are 16 bytes which form the FileName. The
+length of the block is calculated from Start and End address, which is written
+after the Filename:
+
+ 00 Filename (16 bytes)
+ 10 Start Address of data (Low, High byte)
+ 12 End   Address of data (Low, High byte)
+ 14 Data
+
+  After the start and end address the actual data is found. There is no XOR
+checksum in this loader...
+
+Still to find out: - Nothing :)
+~~~~~~~~~~~~~~~~~~
+
+
+ 5. Ace of Aces Loader
+=======================
+  info by Ben Castricum <B.Castricum@bns.getronics.nl>
+
+Encoding:
+---------
+
+Uses the same encoding as Standard Turbo Tape.
+
+ Bit 0:  483 T-States
+ Bit 1: 1008 T-States
+
+Data Endianess: MOST Significant bit First
+
+ Lead-In Byte:  $80
+    Sync Byte:  $FF
+
+Still to find out: 100% Correct Timings (Now gathered from TAP files) !
+~~~~~~~~~~~~~~~~~~
+
+Structure:
+----------
+
+  The length of the block is calculated from Start and End address, which is
+written at the start of the block (after the SYNC Byte). After tese 4 bytes
+the Filename is stored in 16 bytes (but only first 10 seem to be used).
+
+ 00 Start Address of data (Low, High byte)
+ 02 End   Address of data (Low, High byte)
+ 04 Filename (16 bytes)
+ 14 Data
+ .. XOR Checksum of all Data
+
+  After the Filename the actual data is found. After the Data the XOR checksum
+byte is written, which is the XOR of all Data (the start and end address and
+the Filename are NOT included in the XOR calculation).
+
+Still to find out: - Nothing :)
+~~~~~~~~~~~~~~~~~~
+
+
+ 6. Players Loader
+=====================
+  info by Ben Castricum <B.Castricum@bns.getronics.nl>
+
+Encoding:
+---------
+
+Uses the same encoding as Standard Turbo Tape.
+
+ Bit 0:  682 T-States
+ Bit 1: 1008 T-States
+
+Data Endianess: LEAST Significant bit First
+
+ Lead-In Byte:  $A0
+    Sync Byte:  $0A
+
+Still to find out: 100% Correct Timings (Now gathered from TAP file)
+~~~~~~~~~~~~~~~~~~
+
+Structure:
+----------
+
+NOTE: There are 3 ROM chunks in front of the custom blocks. There MUST be Pilot
+      Tone AFTER each of the DATA ROM Blocks (not the Headers) ... otherwise you
+      will get flashing square when the game starts. 
+
+  This loader uses the Lead-In and SYNC sequence ONLY for the first custom
+block. All blocks that follow it are without the Lead-In tone and Sync sequence
+and MUST follow the previous block immediately with the Information.
+
+  Sync Sequence of the first block (after the Sync Byte which is $0A) looks
+like this :
+
+$09 $08 $07 $06 $05 $04 $03 $02 $01
+
+  Then the following information is given :
+
+ 00 End Address of data (Low, High byte)
+ 02 Length of data - 1  (Low, High byte)
+ 05 DATA
+ .. CheckSum byte
+
+NOTE: The length written is actually the length of the data-1 !
+
+  The DATA is loaded in from End to Start (in the opposite direction) !
+
+  DATA is encrypted in the following way:
+
+Real_Value = Value ^ (Address & 0xFF);
+
+(Address being the address to which the byte will be loaded)
+
+  The Checksum is then computed from the Real_Values and is XOR of all Data !
+
+  The End Address AND Length of the Data of the LAST block will be $0000 !
+If you want the game to start then you will have to convert the two bytes after
+the end address and length to let the game start. (note that the LAST byte that will
+be read will NOT have 8 bits, but 7 ... dunno why though).
+
+(length of block = end (2) + len (2) + Flag (1) + checksum (1) = 6)
+
+Still to find out: - Nothing
+~~~~~~~~~~~~~~~~~~
+
+
+ 7. NovaLoad
+==============
+  info by Tomaz Kac <Tomaz.Kac@uni-mb.si> ,
+          Markus Brenner <brenner@libelle.biochem.mpg.de>
+
+Encoding:
+---------
+
+ Bit 0:  511 T-States
+ Bit 1: 1222 T-States
+
+  Data Endianess: LEAST Significant bit First
+
+  Pilot Tone is constructed of MANY $00 Bytes (normally 255-257). Pilot end's
+when Bit 1 is read. After this bit the actual Data starts.
+
+Still to find out: 100% Correct Timings (Now gathered from TAP files) !
+~~~~~~~~~~~~~~~~~~
+
+Structure:
+----------
+
+  First byte of a block is always $AA which is considered as FLAG byte.
+  
+  The Second byte read can either be $55 in which case this block is considered
+as 'Special' block, if it is anything else than $55 than this is the following
+data that is present (including this byte):
+
+  1 byte  Length of filename    (this can be $00 - then no filename follows !)
+  n bytes Filename
+  2 bytes Load Address        - $100 (you have to add $100 to get actual add.)
+  2 bytes End  Address
+  2 bytes Length of the block + $100 (here you must substract $100 to get len.)
+  
+After this a series of sub-blocks start with the length of DATA being 256 if
+there is some more data avialble otherwise the length is whatever is left...
+  
+  1 byte  Checksum so far
+  n bytes Data (either 256 or less bytes)
+
+This is then repeated until whole data is read in from the 256 long blocks.
+
+After all sub-blocks there is FINAL Checksum ... 
+
+The checksum starts with the first byte read (Length of filename) and is
+normal addition of all bytes (you have to do checksum = (checksum + byte) & 0xFF
+to get correct result). After you check the checksum you must also add it !
+
+If the Length of filename (the byte after the FLAG) is $55 then the block
+structure is different:
+
+    1 byte  Load Address HIGH Byte only
+  256 bytes Data
+    1 byte  Checksum
+
+This is first repeated UNTIL Load address is $F0 , after which is again repeated
+UNTIL Load address is $00 ! 
+
+The Checksum is calculated the same way as before (starts with the 1st byte AFTER $55).
+
+All blocks also have some TRAILING Tone present after the end of the block.
+
+Still to find out: - Nothing
+~~~~~~~~~~~~~~~~~~
+
+
+ 8. Ocean/Imagine Loader
+===================
+  info by Ben Castricum <B.Castricum@bns.getronics.nl> ,
+          Markus Brenner <brenner@libelle.biochem.mpg.de>
+
+Encoding:
+---------
+
+Uses the same encoding as Standard Turbo Tape.
+
+ Bit 0:  511 T-States
+ Bit 1: 1222 T-States
+
+Data Endianess: LEAST Significant bit First
+
+ Pilot tone is Bit-0 Repeated atleast 3000 Times and it ends with single Bit 1 !
+ 
+Still to find out: 100% Correct Timings (Now gathered from TAP files) !
+~~~~~~~~~~~~~~~~~~
+
+Structure:
+----------
+
+  There are 3 different Ocean/Imagine loaders found so far. The difference are
+very small, so almost the same decoding can be used.
+
+  The Types 2 & 3 have additional FLAG byte after the Sync Bit.. this FLAG is
+ 0xAA.
+
+  Data is structured from blocks, each block is 256 bytes long. The following
+information is sent before each block of all three types:
+
+  00 if it is $01 then write $00 to address $0001 (Page in RAM !)
+  01 HIGH Byte of Load Address
+  
+After the HIGH Byte of Load Address the 256 bytes of Data follow.
+
+  The END of loading is signalled by this byte being $00 for Types 1 & 2 ,
+Type 3 has the END of the loading signalled by byte $02 !
+
+  Types 1 & 2 also have some TRAILING Tone present, which should be read in !
+
+Still to find out: - Nothing :)
+~~~~~~~~~~~~~~~~~~
+
+
+ 9. Mastertronic Loader
+===================
+  info by Markus Brenner <brenner@libelle.biochem.mpg.de>,
+          Tomaz Kac <tomaz.kac@uni-mb.si>          
+
+Encoding:
+---------
+
+Uses the same encoding as Standard Turbo Tape BUT it has some differences !
+
+ Bit 0:  539 T-States
+ Bit 1: 1165 T-States
+
+Data Endianess: It changes during the loading !
+
+Also number of bits per byte changes during the loading !
+
+Some blocks have the Pilot tone, some don't.  First block has 9 bits  per  byte
+(additional  bit  is sent before the actual byte and it always has value 1), it
+has MSB endianess and it has 256 bytes of Pilot tone with value $00.
+ 
+Still to find out: 100% Correct Timings (Now gathered from TAP files) !
+~~~~~~~~~~~~~~~~~~
+
+Structure:
+----------
+
+  This loader changes its structure DURING actual loading.  The blocks that are
+loaded in are of different  length,  different endianess, have different number
+of additional bits before  each  byte  (their  value  is  always  1)  and  have
+different  number  of  header  bytes.  Also sometimes they have pilot bytes and
+sometimes they don't. 
+  You can determine all this by looking at the starting address of the block.
+
+Starting values of loading are :
+
+  Data Endianess           : MSB
+  Pilot tone               : yes
+  Additional bits per byte : 1
+  Additional header bytes  : 0
+
+If you should read some additional bits you must read them before  actual  byte
+starts,  this  is  done for all bytes (including Pilot bytes).  So the starting
+pilot byte that should be read  in  is  actually 100000000 (additional bit is 1
+and the byte has value $00).
+
+Block structure :
+
+  If pilot should be read then there are any number of bytes  $00  followed  by
+the  sync byte $16.  If the pilot should not be read then there is no sync byte
+either !
+
+  After that the additional Header bytes are sent (default is  0,  but  can  be
+changed later !)
+
+  Then the following 4 bytes are sent :
+
+  2 bytes : Block END   address HIGH, LOW
+  2 bytes : Block START address HIGH, LOW
+
+After that the actual DATA is sent !
+
+NOTE: if Block END == Block START then 1 byte will STILL be sent !!!
+
+AFTER you read in all the data you  must look at the START address ... here are
+the special cases that you must consider :
+
+  $034b : First DATA byte holds number of bits per byte for next block(s)
+  $03a4 : First DATA byte holds number of additional header bytes + 3
+  $0347 : if First DATA byte is $26 then next block will be MSB else LSB
+  $03bb : Next block will have PILOT tone before it (ANY number , can be 1 !)
+
+These  values  change  after  every  2  or  3  blocks, so the structure changes
+constantly through the loading.
+
+Still to find out: - Nothing :)
+~~~~~~~~~~~~~~~~~~
+
+
+ 10. Kettle Loader
+=================
+  info by Markus Brenner <markus@brenner.de>
+
+Encoding:
+---------
+
+ Bit 0:  384 T-States ($1b)
+ Bit 1:  526 T-States ($25)
+
+
+Data Endianess: MOST Significant bit First
+
+ Lead-In Byte:  $63
+    Sync Bytes: $64, $65, $66, ... , $ff
+
+   Start Byte:  if $00 restart loading
+
+Structure:
+----------
+
+  Synching consists of finding the Lead-In Byte, then reading further
+lead-in bytes until the Sync Byte Sequence is found. A start byte is
+read, and usually ignored.
+
+  The length of the block is calculated from Start and End address, which is
+written at the start of the block (after the SYNC Sequence):
+
+ 00 Start Address of data (Low, High byte)
+ 02 End   Address of data (Low, High byte)
+ 04-09    stored in Zero Page
+ 0a DATA
+ .. XOR Checksum of all Data
+
+Still to find out: - Nothing
+~~~~~~~~~~~~~~~~~~
+
+
+ 11. Rainbird Loader
+===================
+  info by Markus Brenner <markus@brenner.de>
+
+Encoding:
+---------
+
+ Bit 0:   767 T-States ($36)
+ Bit 1:  1009 T-States ($47)
+
+Everything else but pulse lengths identical to 'Kettle' loader.
+
+Still to find out: - nothing
+~~~~~~~~~~~~~~~~~~
+
+
+ 13. Zoids Loader
+================
+  info by Markus Brenner <markus@brenner.de>
+
+  This loader includes three types of loaders:
+
+  first:  standard ROM blocks
+  second: modified standard turbo tape file, without header or checksum
+  third:  several 180 loader blocks
+
+ Bit 0:  469 T-States ($21) (180 loader)
+ Bit 1:  951 T-States ($43) (180 loader)
+
+
+Encoding:
+---------
+
+ Bit 0:  370 T-States ($1a) (turbo tape)
+ Bit 1:  540 T-States ($26) (turbo tape)
+
+Data Endianess: MOST Significant bit First
+
+ Lead-In Byte:  $02
+    Sync Byte:  $09, $08, $07, $06, $05, $04, $03, $02, $01
+  Header Byte:  != 0x00
+
+Structure:
+----------
+
+ 00 Start Address of data (Low, High byte)
+ 02 End   Address of data (Low, High byte)
+ 04 DATA
+
+no checksum
+
+Still to find out: - nothing
+~~~~~~~~~~~~~~~~~~
+

@@ -1,0 +1,35 @@
+Binary Design tape
+------------------
+Info by Luigi DI Fraia <armaeth@libero.it>
+
+The elder (original) loader should be called "Hi-Tec tape" used in some Hi-Tec 
+releases (eg. "Chevy Chase", "Top Cat starring in Beverly Hills"), but also in 
+"Turbo the Tortoise" and "Crystal Kingdom Dizzy".
+
+  Threshold value is $017E (Tap value: $2F)
+  CBM filelame ALWAYS contains a "Turn to BLUE" ($1F) char followed by some ASM 
+  data (6C,FD,00,etc.). Nothing seems to appear at the FOUND message on a C64 
+  screen if background color is BLUE. 
+  Border flash is performed with: INC $D020/DEC $D020.
+  CBM Header CRC32 is ALWAYS: $858D1EB4.
+  CBM Data ($02A7-$0303) CRC32 is ALWAYS: $FADDF41C 
+
+The clone could be called back "Virgin tape" (Double Dragon 2, E-Swat, Line of 
+Fire).
+
+  Threshold value is $015E (Tap value: $2B)
+  CBM filelame is not used for ASM data. 
+  Border flash is performed with: LDA $D020/EOR #$05/STA $D020 (as Cyberload). 
+  CBM Data (same range: $02A7-$0303) CRC32 is ALWAYS: $895DCF44
+
+Endianess : MSbF
+Pilot : $AA (*256)
+Sync : $A0 
+
+1 byte : Block Number (they start at 0)
+1 byte : VIC screen hide/show, value is $00 or $10, ($10 = show)
+2 bytes : Load Address (low,high)
+2 bytes : End Address (low,high).
+2 bytes : Execution Address (if $0000 then no action taken)
+n bytes : Data.
+1 byte : Checksum (0 xor all n data bytes)

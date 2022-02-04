@@ -1,0 +1,27 @@
+CRL loader
+==========
+Info by Fabrizio Gennari <fabrizio.ge@tiscalinet.it>
+
+Used by Nato Assault Course, Oink, Pilgrim, Tau Ceti, Time Fighter, Traxxion
+
+Sync: 5 pulses between $600 and $E00 clock cycles, followed by 5 pulses between
+$300 and $700 clock cycles.
+
+Threshold: $200 clock cycles
+Endianness: LSbF
+
+After sync, data bytes, always a multiple of 256. No checksums.
+
+Structure:
+the start address and length (in units of 256 bytes) of first chunk are
+hard-coded in header chunk (Kernal loader).
+
+First chunk contains the loader routine, and the code that invokes it (and also
+displays/hides loading screen between chunks)
+
+The start addresses and lengths of all following chunks are hard-coded in the
+first chunk.
+
+Code in first chunk stores in $04 length (in unit of 256 bytes) of each chunk,
+modifies the loader routine with the start address, then does JSR to the loader
+routine. It does so for each of the following chunks, until loading is complete.
