@@ -1,19 +1,41 @@
 <?php
-
 //
-// Meatloaf Server Script
+// Meatloaf - A Commodore 64/128 multi-device emulator
+// https://github.com/idolpx/meatloaf
+// Copyright(C) 2022 James Johnston
+//
+// Meatloaf Server Script-----------------------------------------
 // Create a directory listing as a Commodore Basic Program
 // Responds with binary PRG file ready to load and list
+// ---------------------------------------------------------------
 //
+// Meatloaf is free software : you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Meatloaf is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Meatloaf. If not, see <http://www.gnu.org/licenses/>.
 //
+
+//
+// https://gist.github.com/idolpx/ab8874f8396b6fa0d89cc9bab1e4dee2
+//
+
 
 $basic_start = 0x0801;
-$next_entry = $basic_start + 2;
+$next_entry = $basic_start;
 
-if(!isset($url))
+if(!isset($root))
 {
     $url = "C64.MEATLOAF.CC";
-    $root = getcwd()."/roms/";
+    $root = $_SERVER["DOCUMENT_ROOT"]."/";
+	//echo $root."\n";
 }
 
 
@@ -39,7 +61,7 @@ function sendLine($blocks, $line)
     global $next_entry;
     
     $line .= "\x00";
-    $next_entry = $next_entry + strlen($line);
+    $next_entry = $next_entry + 4 + strlen($line);
     echo pack('v', $next_entry);
     echo pack('v', $blocks);
     echo strtoupper("$line");
@@ -53,11 +75,10 @@ function sendListing($dir, $exp)
     echo pack('v', $basic_start);
     
     // Send List HEADER
-	sendLine(0, "\x12\"MEATLOAF ARCHIVE\"\x0A08\x0A2A");
+    sendLine(0, "\x12\"MEATLOAF ARCHIVE\" 08 2A");
 
     //echo "[$dir]"; exit();
     $dh = @opendir($root.$dir);
-    //echo $dir."\r\n";
     
     // Send Extra INFO
     sendLine(0, sprintf("\"%-19s\" NFO", "[URL]"));
@@ -71,7 +92,7 @@ function sendListing($dir, $exp)
 
     if ($dh) {
         while (($fname = readdir($dh)) !== false) {
-            if (preg_match($exp, $fname) && $fname != "index.php") {
+            if (preg_match($exp, $fname)) {
                 $stat = stat("$root$dir/$fname");
                 $type = get_type("$dir/$fname");
                 $blocks = intval($stat['size']/256);
@@ -96,7 +117,10 @@ if ($path == '')
 
 //Set Content Type
 header('Content-Type: application/octet-stream');
+
 //Use Content-Disposition: attachment to specify the filename
 header('Content-Disposition: attachment; filename="index.prg"');
-sendListing($path, '/(?!^\.&|^\.\.$|.*?\.php)([a-z0-9]+)$/i');
-?> 
+
+sendListing($path, '/(?!^\..*?$|^.*?.html|^.*?.php|^api$|^web.config$)^.*?$/i');
+
+?>  

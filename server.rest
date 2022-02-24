@@ -21,3 +21,10 @@ User-Agent: MEATLOAF CBM [20200923.01]
 Content-Type: application/x-www-form-urlencoded
 
 p={{path}}&i={{image}}&f={{file}}
+
+###
+GET http://c64.meatloaf.cc HTTP/1.1
+
+###
+GET http://c64.meatloaf.cc HTTP/1.1
+User-Agent: MEATLOAF CBM [20200923.01]
